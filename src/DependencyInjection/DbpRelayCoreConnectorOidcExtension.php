@@ -2,18 +2,18 @@
 
 declare(strict_types=1);
 
-namespace Dbp\Relay\AuthBundle\DependencyInjection;
+namespace Dbp\Relay\CoreConnectorOidcBundle\DependencyInjection;
 
-use Dbp\Relay\AuthBundle\Authenticator\BearerUserProvider;
-use Dbp\Relay\AuthBundle\OIDCProvider\OIDProvider;
-use Dbp\Relay\AuthBundle\Service\AuthorizationDataProvider;
+use Dbp\Relay\CoreConnectorOidcBundle\Authenticator\BearerUserProvider;
+use Dbp\Relay\CoreConnectorOidcBundle\OIDCProvider\OIDProvider;
+use Dbp\Relay\CoreConnectorOidcBundle\Service\AuthorizationDataProvider;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Extension\PrependExtensionInterface;
 use Symfony\Component\DependencyInjection\Loader\YamlFileLoader;
 use Symfony\Component\HttpKernel\DependencyInjection\ConfigurableExtension;
 
-class DbpRelayAuthExtension extends ConfigurableExtension implements PrependExtensionInterface
+class DbpRelayCoreConnectorOidcExtension extends ConfigurableExtension implements PrependExtensionInterface
 {
     public function loadInternal(array $mergedConfig, ContainerBuilder $container): void
     {

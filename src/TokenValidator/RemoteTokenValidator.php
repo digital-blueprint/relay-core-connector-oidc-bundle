@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace Dbp\Relay\AuthBundle\TokenValidator;
+namespace Dbp\Relay\CoreConnectorOidcBundle\TokenValidator;
 
-use Dbp\Relay\AuthBundle\OIDCProvider\OIDError;
-use Dbp\Relay\AuthBundle\OIDCProvider\OIDProvider;
+use Dbp\Relay\CoreConnectorOidcBundle\OIDCProvider\OIDError;
+use Dbp\Relay\CoreConnectorOidcBundle\OIDCProvider\OIDProvider;
 
 class RemoteTokenValidator extends TokenValidatorBase
 {

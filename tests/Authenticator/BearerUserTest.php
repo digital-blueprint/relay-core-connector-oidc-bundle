@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Dbp\Relay\AuthBundle\Tests\Authenticator;
+namespace Dbp\Relay\CoreConnectorOidcBundle\Tests\Authenticator;
 
-use Dbp\Relay\AuthBundle\Authenticator\BearerUser;
+use Dbp\Relay\CoreConnectorOidcBundle\Authenticator\BearerUser;
 use PHPUnit\Framework\TestCase;
 
 class BearerUserTest extends TestCase

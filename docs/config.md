@@ -2,19 +2,19 @@
 
 ## Recipe
 
-The default [Symfony recipe](https://github.com/digital-blueprint/symfony-recipes/tree/main/dbp/relay-auth-bundle)
+The default [Symfony recipe](https://github.com/digital-blueprint/symfony-recipes/tree/main/dbp/relay-core-connector-oidc-bundle)
 creates a minimal configuration using two environment variables, which you have to fill out:
 
-* `AUTH_SERVER_URL`: The URL to the OIDC server (or in case of Keycloak to the realm on the server)
-* `AUTH_FRONTEND_CLIENT_ID`: The client ID for the API documentation page
+* `CORE_CONNECTOR_OIDC_SERVER_URL`: The URL to the OIDC server (or in case of Keycloak to the realm on the server)
+* `CORE_CONNECTOR_OIDC_FRONTEND_CLIENT_ID`: The client ID for the API documentation page
 
 ## Bundle Configuration
 
-created via `./bin/console config:dump-reference DbpRelayAuthBundle | sed '/^$/d'`
+created via `./bin/console config:dump-reference DbpRelayCoreConnectorOidcBundle | sed '/^$/d'`
 
 ```yaml
-# Default configuration for "DbpRelayAuthBundle"
-dbp_relay_auth:
+# Default configuration for "DbpRelayCoreConnectorOidcBundle"
+dbp_core_connector_oidc:
   # The base URL for the OIDC server (in case of Keycloak fort the specific realm)
   server_url:           ~ # Example: 'https://keycloak.example.com/auth/realms/my-realm'
   # If set only tokens which contain this audience are accepted (optional)

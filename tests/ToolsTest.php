@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Dbp\Relay\AuthBundle\Tests;
+namespace Dbp\Relay\CoreConnectorOidcBundle\Tests;
 
-use Dbp\Relay\AuthBundle\Helpers\Tools;
+use Dbp\Relay\CoreConnectorOidcBundle\Helpers\Tools;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\Cache\CacheItem;
 use Symfony\Contracts\Cache\ItemInterface;

@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Dbp\Relay\AuthBundle\Tests;
+namespace Dbp\Relay\CoreConnectorOidcBundle\Tests;
 
-use Dbp\Relay\AuthBundle\Authenticator\BearerUserProviderInterface;
+use Dbp\Relay\CoreConnectorOidcBundle\Authenticator\BearerUserProviderInterface;
 use Symfony\Component\Security\Core\Exception\AuthenticationException;
 use Symfony\Component\Security\Core\User\UserInterface;
 

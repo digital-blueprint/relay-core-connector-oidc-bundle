@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Dbp\Relay\AuthBundle\Service;
+namespace Dbp\Relay\CoreConnectorOidcBundle\Service;
 
-use Dbp\Relay\AuthBundle\API\UserRolesInterface;
+use Dbp\Relay\CoreConnectorOidcBundle\API\UserRolesInterface;
 
 class DefaultUserRoles implements UserRolesInterface
 {

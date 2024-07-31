@@ -2,13 +2,13 @@
 
 declare(strict_types=1);
 
-namespace Dbp\Relay\AuthBundle\Tests\Authenticator;
+namespace Dbp\Relay\CoreConnectorOidcBundle\Tests\Authenticator;
 
 use ApiPlatform\Symfony\Bundle\Test\ApiTestCase;
-use Dbp\Relay\AuthBundle\Authenticator\BearerAuthenticator;
-use Dbp\Relay\AuthBundle\Authenticator\BearerUser;
-use Dbp\Relay\AuthBundle\Tests\DummyUserProvider;
-use Dbp\Relay\AuthBundle\Tests\UserSession\DummyUserSessionProvider;
+use Dbp\Relay\CoreConnectorOidcBundle\Authenticator\BearerAuthenticator;
+use Dbp\Relay\CoreConnectorOidcBundle\Authenticator\BearerUser;
+use Dbp\Relay\CoreConnectorOidcBundle\Tests\DummyUserProvider;
+use Dbp\Relay\CoreConnectorOidcBundle\Tests\UserSession\DummyUserSessionProvider;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\Authentication\Token\NullToken;
 use Symfony\Component\Security\Core\Exception\AuthenticationException;

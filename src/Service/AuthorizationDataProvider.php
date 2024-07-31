@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Dbp\Relay\AuthBundle\Service;
+namespace Dbp\Relay\CoreConnectorOidcBundle\Service;
 
-use Dbp\Relay\AuthBundle\DependencyInjection\Configuration;
-use Dbp\Relay\AuthBundle\UserSession\OIDCUserSessionProviderInterface;
 use Dbp\Relay\CoreBundle\User\UserAttributeProviderInterface;
+use Dbp\Relay\CoreConnectorOidcBundle\DependencyInjection\Configuration;
+use Dbp\Relay\CoreConnectorOidcBundle\UserSession\OIDCUserSessionProviderInterface;
 
 class AuthorizationDataProvider implements UserAttributeProviderInterface
 {

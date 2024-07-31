@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace Dbp\Relay\AuthBundle\Tests;
+namespace Dbp\Relay\CoreConnectorOidcBundle\Tests;
 
-use Dbp\Relay\AuthBundle\Service\AuthorizationDataProvider;
-use Dbp\Relay\AuthBundle\Tests\UserSession\DummyUserSessionProvider;
+use Dbp\Relay\CoreConnectorOidcBundle\Service\AuthorizationDataProvider;
+use Dbp\Relay\CoreConnectorOidcBundle\Tests\UserSession\DummyUserSessionProvider;
 use PHPUnit\Framework\TestCase;
 
 class AuthorizationDataProviderTest extends TestCase

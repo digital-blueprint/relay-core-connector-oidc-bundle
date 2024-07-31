@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Dbp\Relay\AuthBundle\UserSession;
+namespace Dbp\Relay\CoreConnectorOidcBundle\UserSession;
 
-use Dbp\Relay\AuthBundle\Helpers\Tools;
+use Dbp\Relay\CoreConnectorOidcBundle\Helpers\Tools;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 
 class OIDCUserSessionProvider implements OIDCUserSessionProviderInterface

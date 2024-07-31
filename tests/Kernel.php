@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Dbp\Relay\AuthBundle\Tests;
+namespace Dbp\Relay\CoreConnectorOidcBundle\Tests;
 
 use ApiPlatform\Symfony\Bundle\ApiPlatformBundle;
-use Dbp\Relay\AuthBundle\DbpRelayAuthBundle;
 use Dbp\Relay\CoreBundle\DbpRelayCoreBundle;
+use Dbp\Relay\CoreConnectorOidcBundle\DbpRelayCoreConnectorOidcBundle;
 use Nelmio\CorsBundle\NelmioCorsBundle;
 use Symfony\Bundle\FrameworkBundle\FrameworkBundle;
 use Symfony\Bundle\FrameworkBundle\Kernel\MicroKernelTrait;
@@ -30,7 +30,7 @@ class Kernel extends BaseKernel
         yield new NelmioCorsBundle();
         yield new MonologBundle();
         yield new ApiPlatformBundle();
-        yield new DbpRelayAuthBundle();
+        yield new DbpRelayCoreConnectorOidcBundle();
         yield new DbpRelayCoreBundle();
     }
 

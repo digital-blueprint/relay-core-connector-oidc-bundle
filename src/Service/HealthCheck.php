@@ -2,13 +2,13 @@
 
 declare(strict_types=1);
 
-namespace Dbp\Relay\AuthBundle\Service;
+namespace Dbp\Relay\CoreConnectorOidcBundle\Service;
 
-use Dbp\Relay\AuthBundle\Authenticator\BearerUserProvider;
-use Dbp\Relay\AuthBundle\OIDCProvider\OIDProvider;
 use Dbp\Relay\CoreBundle\HealthCheck\CheckInterface;
 use Dbp\Relay\CoreBundle\HealthCheck\CheckOptions;
 use Dbp\Relay\CoreBundle\HealthCheck\CheckResult;
+use Dbp\Relay\CoreConnectorOidcBundle\Authenticator\BearerUserProvider;
+use Dbp\Relay\CoreConnectorOidcBundle\OIDCProvider\OIDProvider;
 
 class HealthCheck implements CheckInterface
 {

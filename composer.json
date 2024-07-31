@@ -1,6 +1,6 @@
 {
-    "name": "dbp/relay-auth-bundle",
-    "description": "Authentification bundle for the Relay API gateway",
+    "name": "dbp/core-connector-oidc-bundle",
+    "description": "Core connector OIDC bundle for the Relay API gateway",
     "type": "symfony-bundle",
     "license": "AGPL-3.0-or-later",
     "require": {
@@ -40,12 +40,12 @@
     },
     "autoload": {
         "psr-4": {
-            "Dbp\\Relay\\AuthBundle\\": "src/"
+            "Dbp\\Relay\\CoreConnectorOidcBundle\\": "src/"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "Dbp\\Relay\\AuthBundle\\Tests\\": "tests/"
+            "Dbp\\Relay\\CoreConnectorOidcBundle\\Tests\\": "tests/"
         }
     },
     "config": {

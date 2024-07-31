@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Dbp\Relay\AuthBundle\Tests\UserSession;
+namespace Dbp\Relay\CoreConnectorOidcBundle\Tests\UserSession;
 
-use Dbp\Relay\AuthBundle\UserSession\OIDCUserSessionProviderInterface;
+use Dbp\Relay\CoreConnectorOidcBundle\UserSession\OIDCUserSessionProviderInterface;
 
 class DummyUserSessionProvider implements OIDCUserSessionProviderInterface
 {

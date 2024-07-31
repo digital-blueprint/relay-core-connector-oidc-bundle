@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Dbp\Relay\AuthBundle\Helpers;
+namespace Dbp\Relay\CoreConnectorOidcBundle\Helpers;
 
 use GuzzleHttp\MessageFormatter;
 use GuzzleHttp\Middleware;

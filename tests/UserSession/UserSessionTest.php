@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Dbp\Relay\AuthBundle\Tests\UserSession;
+namespace Dbp\Relay\CoreConnectorOidcBundle\Tests\UserSession;
 
-use Dbp\Relay\AuthBundle\UserSession\OIDCUserSessionProvider;
+use Dbp\Relay\CoreConnectorOidcBundle\UserSession\OIDCUserSessionProvider;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBag;
 

@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Dbp\Relay\AuthBundle\DependencyInjection;
+namespace Dbp\Relay\CoreConnectorOidcBundle\DependencyInjection;
 
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 use Symfony\Component\Config\Definition\ConfigurationInterface;
@@ -16,7 +16,7 @@ class Configuration implements ConfigurationInterface
 
     public function getConfigTreeBuilder(): TreeBuilder
     {
-        $treeBuilder = new TreeBuilder('dbp_relay_auth');
+        $treeBuilder = new TreeBuilder('dbp_core_connector_oidc');
         $treeBuilder->getRootNode()
             ->children()
                 // Note: "<server_url>/.well-known/openid-configuration" has to exist
@@ -58,17 +58,17 @@ class Configuration implements ConfigurationInterface
 
                 // [DEPRECATED]
                 ->scalarNode('frontend_keycloak_server')
-                    ->setDeprecated('dbp/relay-auth-bundle', '0.1.12', 'No longer needed')
+                    ->setDeprecated('dbp/core-connector-oidc-bundle', '0.1.12', 'No longer needed')
                     ->info('The Keycloak server base URL')
                     ->example('https://keycloak.example.com/auth')
                 ->end()
                 ->scalarNode('frontend_keycloak_realm')
-                    ->setDeprecated('dbp/relay-auth-bundle', '0.1.12', 'No longer needed')
+                    ->setDeprecated('dbp/core-connector-oidc-bundle', '0.1.12', 'No longer needed')
                     ->info('The keycloak realm')
                     ->example('client-docs')
                 ->end()
                 ->scalarNode('frontend_keycloak_client_id')
-                    ->setDeprecated('dbp/relay-auth-bundle', '0.1.12', 'Use "frontend_client_id" instead')
+                    ->setDeprecated('dbp/core-connector-oidc-bundle', '0.1.12', 'Use "frontend_client_id" instead')
                     ->info('The ID for the keycloak client (authorization code flow) used for API docs or similar')
                     ->example('client-docs')
                 ->end()
@@ -78,7 +78,7 @@ class Configuration implements ConfigurationInterface
                         ->children()
                             ->scalarNode(self::NAME_ATTRIBUTE)->end()
                             ->scalarNode(self::SCOPE_ATTRIBUTE)
-                               ->setDeprecated('dbp/relay-auth-bundle', '0.1.21', 'Use \'scopes\' instead')
+                               ->setDeprecated('dbp/core-connector-oidc-bundle', '0.1.21', 'Use \'scopes\' instead')
                             ->end()
                             ->arrayNode(self::SCOPES_ATTRIBUTE)
                                ->info('If the user\'s token contains any of the listed scopes, the user is granted the respective authorization attribute, i.e. its value evaluates to \'true\' if requested')

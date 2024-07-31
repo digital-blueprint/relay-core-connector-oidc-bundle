@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Dbp\Relay\AuthBundle\Tests\TokenValidator;
+namespace Dbp\Relay\CoreConnectorOidcBundle\Tests\TokenValidator;
 
-use Dbp\Relay\AuthBundle\OIDCProvider\OIDProvider;
-use Dbp\Relay\AuthBundle\TokenValidator\LocalTokenValidator;
-use Dbp\Relay\AuthBundle\TokenValidator\TokenValidationException;
+use Dbp\Relay\CoreConnectorOidcBundle\OIDCProvider\OIDProvider;
+use Dbp\Relay\CoreConnectorOidcBundle\TokenValidator\LocalTokenValidator;
+use Dbp\Relay\CoreConnectorOidcBundle\TokenValidator\TokenValidationException;
 use GuzzleHttp\Handler\MockHandler;
 use GuzzleHttp\HandlerStack;
 use GuzzleHttp\Psr7\Response;

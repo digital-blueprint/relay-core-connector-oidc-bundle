@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Dbp\Relay\AuthBundle\Authenticator;
+namespace Dbp\Relay\CoreConnectorOidcBundle\Authenticator;
 
 use Symfony\Component\Security\Core\User\UserInterface;
 

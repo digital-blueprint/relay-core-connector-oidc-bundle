@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Dbp\Relay\AuthBundle\Tests;
+namespace Dbp\Relay\CoreConnectorOidcBundle\Tests;
 
-use Dbp\Relay\AuthBundle\Service\DefaultUserRoles;
+use Dbp\Relay\CoreConnectorOidcBundle\Service\DefaultUserRoles;
 use PHPUnit\Framework\TestCase;
 
 class DefaultUserRolesTest extends TestCase

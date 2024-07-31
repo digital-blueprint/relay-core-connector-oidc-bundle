@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Dbp\Relay\AuthBundle\API;
+namespace Dbp\Relay\CoreConnectorOidcBundle\API;
 
 interface UserRolesInterface
 {

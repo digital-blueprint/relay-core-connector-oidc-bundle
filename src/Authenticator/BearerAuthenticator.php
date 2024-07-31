@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Dbp\Relay\AuthBundle\Authenticator;
+namespace Dbp\Relay\CoreConnectorOidcBundle\Authenticator;
 
-use Dbp\Relay\AuthBundle\UserSession\OIDCUserSessionProviderInterface;
+use Dbp\Relay\CoreConnectorOidcBundle\UserSession\OIDCUserSessionProviderInterface;
 use Psr\Log\LoggerAwareInterface;
 use Psr\Log\LoggerAwareTrait;
 use Symfony\Component\HttpFoundation\JsonResponse;

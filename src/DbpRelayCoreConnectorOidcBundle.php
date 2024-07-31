@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace Dbp\Relay\AuthBundle;
+namespace Dbp\Relay\CoreConnectorOidcBundle;
 
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 
-class DbpRelayAuthBundle extends Bundle
+class DbpRelayCoreConnectorOidcBundle extends Bundle
 {
     public function build(ContainerBuilder $container): void
     {

@@ -1,45 +1,45 @@
 services:
-  Dbp\Relay\AuthBundle\Authenticator\BearerAuthenticator:
+  Dbp\Relay\CoreConnectorOidcBundle\Authenticator\BearerAuthenticator:
     autowire: true
     autoconfigure: true
 
-  Dbp\Relay\AuthBundle\Authenticator\BearerUserProvider:
+  Dbp\Relay\CoreConnectorOidcBundle\Authenticator\BearerUserProvider:
     autowire: true
     autoconfigure: true
     calls:
       - setCache: [ '@dbp.relay.auth.cache.user_roles' ]
 
-  Dbp\Relay\AuthBundle\UserSession\OIDCUserSessionProvider:
+  Dbp\Relay\CoreConnectorOidcBundle\UserSession\OIDCUserSessionProvider:
     autowire: true
     autoconfigure: true
 
-  Dbp\Relay\AuthBundle\UserSession\OIDCUserSessionProviderInterface:
-    '@Dbp\Relay\AuthBundle\UserSession\OIDCUserSessionProvider'
+  Dbp\Relay\CoreConnectorOidcBundle\UserSession\OIDCUserSessionProviderInterface:
+    '@Dbp\Relay\CoreConnectorOidcBundle\UserSession\OIDCUserSessionProvider'
 
-  Dbp\Relay\AuthBundle\OIDCProvider\OIDProvider:
+  Dbp\Relay\CoreConnectorOidcBundle\OIDCProvider\OIDProvider:
     autowire: true
     autoconfigure: true
     calls:
       - setCache: [ '@dbp.relay.auth.cache.oid_provider' ]
 
-  Dbp\Relay\AuthBundle\Authenticator\BearerUserProviderInterface:
-    '@Dbp\Relay\AuthBundle\Authenticator\BearerUserProvider'
+  Dbp\Relay\CoreConnectorOidcBundle\Authenticator\BearerUserProviderInterface:
+    '@Dbp\Relay\CoreConnectorOidcBundle\Authenticator\BearerUserProvider'
 
   Symfony\Component\Security\Http\Authenticator\AuthenticatorInterface:
-    '@Dbp\Relay\AuthBundle\Authenticator\BearerAuthenticator'
+    '@Dbp\Relay\CoreConnectorOidcBundle\Authenticator\BearerAuthenticator'
 
-  Dbp\Relay\AuthBundle\Service\DefaultUserRoles:
+  Dbp\Relay\CoreConnectorOidcBundle\Service\DefaultUserRoles:
     autowire: true
     autoconfigure: true
 
-  Dbp\Relay\AuthBundle\Service\HealthCheck:
+  Dbp\Relay\CoreConnectorOidcBundle\Service\HealthCheck:
     autowire: true
     autoconfigure: true
 
-  Dbp\Relay\AuthBundle\API\UserRolesInterface:
-    '@Dbp\Relay\AuthBundle\Service\DefaultUserRoles'
+  Dbp\Relay\CoreConnectorOidcBundle\API\UserRolesInterface:
+    '@Dbp\Relay\CoreConnectorOidcBundle\Service\DefaultUserRoles'
 
-  Dbp\Relay\AuthBundle\Service\AuthorizationDataProvider:
+  Dbp\Relay\CoreConnectorOidcBundle\Service\AuthorizationDataProvider:
     autowire: true
     autoconfigure: true
 
