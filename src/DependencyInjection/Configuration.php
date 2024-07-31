@@ -16,7 +16,7 @@ class Configuration implements ConfigurationInterface
 
     public function getConfigTreeBuilder(): TreeBuilder
     {
-        $treeBuilder = new TreeBuilder('dbp_core_connector_oidc');
+        $treeBuilder = new TreeBuilder('dbp_relay_core_connector_oidc');
         $treeBuilder->getRootNode()
             ->children()
                 // Note: "<server_url>/.well-known/openid-configuration" has to exist

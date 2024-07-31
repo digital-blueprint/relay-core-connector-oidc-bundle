@@ -14,7 +14,7 @@ created via `./bin/console config:dump-reference DbpRelayCoreConnectorOidcBundle
 
 ```yaml
 # Default configuration for "DbpRelayCoreConnectorOidcBundle"
-dbp_core_connector_oidc:
+dbp_relay_core_connector_oidc:
   # The base URL for the OIDC server (in case of Keycloak fort the specific realm)
   server_url:           ~ # Example: 'https://keycloak.example.com/auth/realms/my-realm'
   # If set only tokens which contain this audience are accepted (optional)
