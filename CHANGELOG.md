@@ -1,6 +1,6 @@
 # Changelog
 
-## Unreleased
+## v0.1.32
 
 * Renamed the bundle from "auth-bundle" to "core-connector-oidc-bundle"
 
