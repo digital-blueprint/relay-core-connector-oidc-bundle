@@ -1,5 +1,5 @@
 {
-    "name": "dbp/core-connector-oidc-bundle",
+    "name": "dbp/relay-core-connector-oidc-bundle",
     "description": "Core connector OIDC bundle for the Relay API gateway",
     "type": "symfony-bundle",
     "license": "AGPL-3.0-or-later",
