@@ -5,8 +5,8 @@
 The default [Symfony recipe](https://github.com/digital-blueprint/symfony-recipes/tree/main/dbp/relay-core-connector-oidc-bundle)
 creates a minimal configuration using two environment variables, which you have to fill out:
 
-* `CORE_CONNECTOR_OIDC_SERVER_URL`: The URL to the OIDC server (or in case of Keycloak to the realm on the server)
-* `CORE_CONNECTOR_OIDC_FRONTEND_CLIENT_ID`: The client ID for the API documentation page
+* `AUTH_SERVER_URL`: The URL to the OIDC server (or in case of Keycloak to the realm on the server)
+* `AUTH_FRONTEND_CLIENT_ID`: The client ID for the API documentation page
 
 ## Bundle Configuration
 
