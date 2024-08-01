@@ -6,12 +6,13 @@
 
 Migration guide:
 
-  * Remove dbp/relay-auth-bundle: `composer remove --no-scripts dbp/relay-auth-bundle`
-  * Add dbp/relay-core-connector-oidc-bundle: `composer require --no-scripts dbp/relay-core-connector-oidc-bundle`
-  * Rename the config:
-    * `mv config/packages/dbp_relay_auth.yaml config/packages/dbp_relay_core_connector_oidc.yaml`
-    * `sed -i 's/dbp_relay_auth/dbp_relay_core_connector_oidc/g' config/packages/dbp_relay_core_connector_oidc.yaml`
-  * Replace usage of `Dbp\Relay\AuthBundle\API\UserRolesInterface` in your code or services config with `Dbp\Relay\CoreConnectorOidcBundle\API\UserRolesInterface`
+* Replace the bundle in your Symfony app:
+   * `mv config/packages/dbp_relay_auth.yaml temp.yaml`
+   * `composer remove dbp/relay-auth-bundle`
+   * `mv temp.yaml config/packages/dbp_relay_core_connector_oidc.yaml`
+   * `sed -i 's/dbp_relay_auth/dbp_relay_core_connector_oidc/g' config/packages/dbp_relay_core_connector_oidc.yaml`
+   * `composer require dbp/relay-core-connector-oidc-bundle`
+* Replace usage of `Dbp\Relay\AuthBundle\API\UserRolesInterface` in your code or services config with `Dbp\Relay\CoreConnectorOidcBundle\API\UserRolesInterface`
 
 ## v0.1.31
 
