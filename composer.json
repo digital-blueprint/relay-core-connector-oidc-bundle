@@ -38,6 +38,9 @@
         "symfony/phpunit-bridge": "^7.0",
         "vimeo/psalm": "^5.22.2"
     },
+    "conflict": {
+        "dbp/relay-auth-bundle": "*"
+    },
     "autoload": {
         "psr-4": {
             "Dbp\\Relay\\CoreConnectorOidcBundle\\": "src/"
