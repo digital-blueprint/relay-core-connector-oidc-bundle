@@ -1,6 +1,6 @@
 # Custom Roles Mapping
 
-The auth bundle provides a default Symfony service implementing the
+The OIDC bundle provides a default Symfony service implementing the
 `UserRolesInterface` interface which translates OAuth2 token scopes into Symfony
 roles. By default, it creates roles with the prefix `ROLE_SCOPE_` and appends the scopes in uppercase.
 

@@ -2,26 +2,26 @@
 
 Source: https://github.com/digital-blueprint/relay-core-connector-oidc-bundle
 
-The auth bundle connects the core bundle with an OIDC server. For each request
+The OIDC bundle connects the core bundle with an OIDC server. For each request
 it validates the passed access token, creates a Symfony user and assigns Symfony
 roles to that user.
 
 ```mermaid
 graph LR
-    style auth_bundle fill:#606096,color:#fff
+    style core_connector_oidc_bundle fill:#606096,color:#fff
 
     oidc_server("OIDC Server")
 
     subgraph API Gateway
         api(("API"))
         core_bundle("Core Bundle")
-        auth_bundle("Auth Bundle")
+        core_connector_oidc_bundle("OIDC Bundle")
     end
 
     api --> core_bundle
-    core_bundle --> auth_bundle
-    auth_bundle --> core_bundle
-    auth_bundle --> oidc_server
+    core_bundle --> core_connector_oidc_bundle
+    core_connector_oidc_bundle --> core_bundle
+    core_connector_oidc_bundle --> oidc_server
 ```
 
 ## Documentation

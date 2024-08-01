@@ -43,7 +43,7 @@ dbp_relay_core_connector_oidc:
 
 ## Configuration Discovery
 
-The auth bundle requires for the OIDC server to implement [OpenID Connect
+The OIDC bundle requires for the OIDC server to implement [OpenID Connect
 Discovery](https://openid.net/specs/openid-connect-discovery-1_0.html) as well
 as the metadata defined in the [OAuth 2.0 Authorization Server
 Metadata](https://datatracker.ietf.org/doc/html/rfc8414).
