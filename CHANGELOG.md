@@ -17,7 +17,7 @@ Migration guide:
    * `mv temp.yaml config/packages/dbp_relay_core_connector_oidc.yaml`
    * `sed -i 's/dbp_relay_auth/dbp_relay_core_connector_oidc/g' config/packages/dbp_relay_core_connector_oidc.yaml`
    * `composer require dbp/relay-core-connector-oidc-bundle`
-* Replace usage of `Dbp\Relay\AuthBundle\API\UserRolesInterface` in your code or services config with `Dbp\Relay\CoreConnectorOidcBundle\API\UserRolesInterface`
+* Replace usage of `Dbp\Relay\AuthBundle\API\UserRolesInterface` in your code or services config with `Dbp\Relay\CoreConnectorOidcBundle\API\UserRolesInterface` (only if you used that interface)
 
 ## v0.1.31
 
