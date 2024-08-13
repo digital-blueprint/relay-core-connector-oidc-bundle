@@ -25,13 +25,24 @@ class OIDCUserSessionProvider implements OIDCUserSessionProviderInterface
         $this->parameters = $parameters;
     }
 
+    private function ensureJwt(): array
+    {
+        if ($this->jwt === null) {
+            throw new \RuntimeException('JWT not set');
+        }
+
+        return $this->jwt;
+    }
+
     public function getUserIdentifier(): ?string
     {
-        if ($this->jwt === null || self::isServiceAccountToken($this->jwt)) {
+        $jwt = $this->ensureJwt();
+
+        if (self::isServiceAccountToken($jwt)) {
             return null;
         }
 
-        return $this->jwt['username'] ?? null;
+        return $jwt['username'] ?? null;
     }
 
     /**
@@ -55,17 +66,18 @@ class OIDCUserSessionProvider implements OIDCUserSessionProviderInterface
 
     public function getScopes(): array
     {
-        return Tools::extractScopes($this->jwt ?? []);
+        $jwt = $this->ensureJwt();
+
+        return Tools::extractScopes($jwt);
     }
 
     public function getSessionLoggingId(): string
     {
         $unknown = 'unknown';
-
         if ($this->jwt === null) {
             return $unknown;
         }
-        assert($this->jwt !== null);
+        $jwt = $this->ensureJwt();
 
         // We want to know where the request is coming from and which requests likely belong together for debugging
         // purposes while still preserving the privacy of the user.
@@ -74,7 +86,6 @@ class OIDCUserSessionProvider implements OIDCUserSessionProviderInterface
         // The keycloak client ID is in azp, so add that too, and hash it with the user ID so we get different
         // user ids for different clients for the same session.
 
-        $jwt = $this->jwt;
         $client = $jwt['azp'] ?? $unknown;
         if (!isset($jwt['session_state'])) {
             $user = $unknown;
@@ -88,19 +99,18 @@ class OIDCUserSessionProvider implements OIDCUserSessionProviderInterface
 
     public function getSessionCacheKey(): string
     {
-        assert($this->jwt !== null);
+        $jwt = $this->ensureJwt();
 
-        return hash('sha256', $this->getUserIdentifier().'.'.json_encode($this->jwt));
+        return hash('sha256', $this->getUserIdentifier().'.'.json_encode($jwt));
     }
 
     public function getSessionTTL(): int
     {
-        assert($this->jwt !== null);
-
-        if (!isset($this->jwt['exp']) || !isset($this->jwt['iat'])) {
+        $jwt = $this->ensureJwt();
+        if (!isset($jwt['exp']) || !isset($jwt['iat'])) {
             return -1;
         }
 
-        return max($this->jwt['exp'] - $this->jwt['iat'], 0);
+        return max($jwt['exp'] - $jwt['iat'], 0);
     }
 }
