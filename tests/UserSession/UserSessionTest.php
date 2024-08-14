@@ -26,7 +26,11 @@ class UserSessionTest extends TestCase
         $session->setSessionToken([]);
         $this->assertSame('unknown-unknown', $session->getSessionLoggingId());
         $session->setSessionToken(['azp' => 'clientA', 'session_state' => 'state']);
-        $this->assertSame('clientA-abfa50', $session->getSessionLoggingId());
+        $this->assertSame('clientA-22957c', $session->getSessionLoggingId());
+        $session->setSessionToken(['azp' => 'clientA', 'jti' => 'some-id']);
+        $this->assertSame('clientA-6a96a9', $session->getSessionLoggingId());
+        $session->setSessionToken(['azp' => 'clientA']);
+        $this->assertSame('clientA-unknown', $session->getSessionLoggingId());
     }
 
     public function testGetSessionCacheKey()

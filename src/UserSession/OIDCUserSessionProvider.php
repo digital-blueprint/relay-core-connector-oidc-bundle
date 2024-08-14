@@ -97,11 +97,15 @@ class OIDCUserSessionProvider implements OIDCUserSessionProviderInterface
         // user ids for different clients for the same session.
 
         $client = $jwt['azp'] ?? $unknown;
-        if (!isset($jwt['session_state'])) {
+
+        // For service accounts we don't get a session_state, so fall back to the jwt ID, so requests with the
+        // same token are at least connected
+        $sessionId = $jwt['session_state'] ?? $jwt['jti'] ?? null;
+        if ($sessionId === null) {
             $user = $unknown;
         } else {
             $appSecret = $this->parameters->has('kernel.secret') ? $this->parameters->get('kernel.secret') : '';
-            $user = substr(hash('sha256', $client.$jwt['session_state'].$appSecret), 0, 6);
+            $user = substr(hash('sha256', $client.'.'.$sessionId.'.'.$appSecret), 0, 6);
         }
 
         return $client.'-'.$user;
