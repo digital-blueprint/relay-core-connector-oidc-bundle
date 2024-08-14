@@ -45,10 +45,6 @@ class OIDCUserSessionProvider implements OIDCUserSessionProviderInterface
     {
         $jwt = $this->ensureJwt();
 
-        if (self::isServiceAccountToken($jwt)) {
-            return null;
-        }
-
         foreach ($this->userIdentifierClaims as $claim) {
             $value = $jwt[$claim] ?? null;
             if (is_string($value)) {
@@ -126,5 +122,17 @@ class OIDCUserSessionProvider implements OIDCUserSessionProviderInterface
         }
 
         return max($jwt['exp'] - $jwt['iat'], 0);
+    }
+
+    public function isServiceAccount(): bool
+    {
+        $jwt = $this->ensureJwt();
+
+        return self::isServiceAccountToken($jwt);
+    }
+
+    public function getSessionCacheTTL(): int
+    {
+        return $this->getSessionTTL();
     }
 }

@@ -60,5 +60,17 @@ class UserSessionTest extends TestCase
         $this->assertSame('foo', $session->getUserIdentifier());
         $session->setConfig(['user_identifier_claims' => ['username']]);
         $this->assertSame(null, $session->getUserIdentifier());
+        $session->setSessionToken(['azp' => 'client-1']);
+        $session->setConfig(['user_identifier_claims' => ['azp']]);
+        $this->assertSame('client-1', $session->getUserIdentifier());
+    }
+
+    public function testIsServiceAccount()
+    {
+        $session = new OIDCUserSessionProvider(new ParameterBag());
+        $session->setSessionToken(['scope' => 'openid something']);
+        $this->assertFalse($session->isServiceAccount());
+        $session->setSessionToken(['scope' => 'something']);
+        $this->assertTrue($session->isServiceAccount());
     }
 }
