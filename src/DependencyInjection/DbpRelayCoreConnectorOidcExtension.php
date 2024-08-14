@@ -7,6 +7,7 @@ namespace Dbp\Relay\CoreConnectorOidcBundle\DependencyInjection;
 use Dbp\Relay\CoreConnectorOidcBundle\Authenticator\BearerUserProvider;
 use Dbp\Relay\CoreConnectorOidcBundle\OIDCProvider\OIDProvider;
 use Dbp\Relay\CoreConnectorOidcBundle\Service\AuthorizationDataProvider;
+use Dbp\Relay\CoreConnectorOidcBundle\UserSession\OIDCUserSessionProvider;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Extension\PrependExtensionInterface;
@@ -30,6 +31,9 @@ class DbpRelayCoreConnectorOidcExtension extends ConfigurableExtension implement
         $definition->addMethodCall('setConfig', [$mergedConfig]);
 
         $definition = $container->getDefinition(AuthorizationDataProvider::class);
+        $definition->addMethodCall('setConfig', [$mergedConfig]);
+
+        $definition = $container->getDefinition(OIDCUserSessionProvider::class);
         $definition->addMethodCall('setConfig', [$mergedConfig]);
     }
 

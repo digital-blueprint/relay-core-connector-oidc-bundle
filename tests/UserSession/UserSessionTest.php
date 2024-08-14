@@ -48,4 +48,17 @@ class UserSessionTest extends TestCase
         $session->setSessionToken(['exp' => 42, 'iat' => 24]);
         $this->assertSame(18, $session->getSessionTTL());
     }
+
+    public function testUserIdClaims()
+    {
+        $session = new OIDCUserSessionProvider(new ParameterBag());
+        $session->setSessionToken(['scope' => 'openid', 'something' => 'foo', 'username' => null]);
+        $this->assertSame(null, $session->getUserIdentifier());
+        $session->setConfig(['user_identifier_claims' => ['something']]);
+        $this->assertSame('foo', $session->getUserIdentifier());
+        $session->setConfig(['user_identifier_claims' => ['username', 'something']]);
+        $this->assertSame('foo', $session->getUserIdentifier());
+        $session->setConfig(['user_identifier_claims' => ['username']]);
+        $this->assertSame(null, $session->getUserIdentifier());
+    }
 }

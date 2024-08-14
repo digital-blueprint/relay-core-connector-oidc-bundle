@@ -18,11 +18,18 @@ class OIDCUserSessionProvider implements OIDCUserSessionProviderInterface
      * @var ParameterBagInterface
      */
     private $parameters;
+    private array $userIdentifierClaims;
 
     public function __construct(ParameterBagInterface $parameters)
     {
         $this->jwt = null;
         $this->parameters = $parameters;
+        $this->userIdentifierClaims = [];
+    }
+
+    public function setConfig(array $config): void
+    {
+        $this->userIdentifierClaims = $config['user_identifier_claims'] ?? [];
     }
 
     private function ensureJwt(): array
@@ -42,7 +49,14 @@ class OIDCUserSessionProvider implements OIDCUserSessionProviderInterface
             return null;
         }
 
-        return $jwt['username'] ?? null;
+        foreach ($this->userIdentifierClaims as $claim) {
+            $value = $jwt[$claim] ?? null;
+            if (is_string($value)) {
+                return $value;
+            }
+        }
+
+        return null;
     }
 
     /**

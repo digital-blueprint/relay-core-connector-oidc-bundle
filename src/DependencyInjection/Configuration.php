@@ -56,6 +56,16 @@ class Configuration implements ConfigurationInterface
                     ->example('client-docs')
                 ->end()
 
+                // Advanced settings
+                ->arrayNode('user_identifier_claims')
+                    ->info('The claims used for the user identifier. The first claim found in the token will be used.')
+                    ->scalarPrototype()->end()
+                    ->defaultValue([
+                        'preferred_username',
+                        'username',
+                    ])
+                ->end()
+
                 // [DEPRECATED]
                 ->scalarNode('frontend_keycloak_server')
                     ->setDeprecated('dbp/relay-core-connector-oidc-bundle', '0.1.12', 'No longer needed')
