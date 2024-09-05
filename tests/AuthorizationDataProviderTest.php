@@ -17,7 +17,7 @@ class AuthorizationDataProviderTest extends TestCase
 
     public function testGetAvailableAttributes(): void
     {
-        $this->setUpUserSession([]);
+        $this->setUpUserSession('username', []);
 
         $this->assertEquals(['ROLE_USER', 'ROLE_ADMIN', 'ROLE_WRITER'], $this->authorizationDataProvider->getAvailableAttributes());
     }
@@ -25,48 +25,48 @@ class AuthorizationDataProviderTest extends TestCase
     public function testUserAttributesDeprecatedScopeAttribute(): void
     {
         // NOTE: user identifier is not required
-        $this->setUpUserSession(['__', 'user']);
+        $this->setUpUserSession('username', ['__', 'user']);
 
         $this->assertEquals(true, $this->authorizationDataProvider->getUserAttributes('username')['ROLE_USER']);
-        $this->assertEquals(false, $this->authorizationDataProvider->getUserAttributes(null)['ROLE_ADMIN']);
+        $this->assertEquals(false, $this->authorizationDataProvider->getUserAttributes('username')['ROLE_ADMIN']);
 
-        $this->setUpUserSession(['admin', '_', '__']);
+        $this->setUpUserSession('username', ['admin', '_', '__']);
 
         $this->assertEquals(false, $this->authorizationDataProvider->getUserAttributes('username')['ROLE_USER']);
-        $this->assertEquals(true, $this->authorizationDataProvider->getUserAttributes(null)['ROLE_ADMIN']);
+        $this->assertEquals(true, $this->authorizationDataProvider->getUserAttributes('username')['ROLE_ADMIN']);
     }
 
     public function testUserAttributes(): void
     {
         // NOTE: user identifier is not required
-        $this->setUpUserSession(['foo', '__']);
+        $this->setUpUserSession('username', ['foo', '__']);
 
         $this->assertEquals(true, $this->authorizationDataProvider->getUserAttributes('username')['ROLE_USER']);
-        $this->assertEquals(false, $this->authorizationDataProvider->getUserAttributes(null)['ROLE_ADMIN']);
-        $this->assertEquals(false, $this->authorizationDataProvider->getUserAttributes(null)['ROLE_WRITER']);
+        $this->assertEquals(false, $this->authorizationDataProvider->getUserAttributes('username')['ROLE_ADMIN']);
+        $this->assertEquals(false, $this->authorizationDataProvider->getUserAttributes('username')['ROLE_WRITER']);
 
-        $this->setUpUserSession(['_', 'baz', '___']);
+        $this->setUpUserSession('username', ['_', 'baz', '___']);
 
         $this->assertEquals(false, $this->authorizationDataProvider->getUserAttributes('username')['ROLE_USER']);
-        $this->assertEquals(true, $this->authorizationDataProvider->getUserAttributes(null)['ROLE_ADMIN']);
-        $this->assertEquals(true, $this->authorizationDataProvider->getUserAttributes(null)['ROLE_WRITER']);
+        $this->assertEquals(true, $this->authorizationDataProvider->getUserAttributes('username')['ROLE_ADMIN']);
+        $this->assertEquals(true, $this->authorizationDataProvider->getUserAttributes('username')['ROLE_WRITER']);
 
-        $this->setUpUserSession(['bar']);
-
-        $this->assertEquals(true, $this->authorizationDataProvider->getUserAttributes('username')['ROLE_USER']);
-        $this->assertEquals(false, $this->authorizationDataProvider->getUserAttributes(null)['ROLE_ADMIN']);
-        $this->assertEquals(true, $this->authorizationDataProvider->getUserAttributes(null)['ROLE_WRITER']);
-
-        $this->setUpUserSession(['baz', 'bar']);
+        $this->setUpUserSession('username', ['bar']);
 
         $this->assertEquals(true, $this->authorizationDataProvider->getUserAttributes('username')['ROLE_USER']);
-        $this->assertEquals(true, $this->authorizationDataProvider->getUserAttributes(null)['ROLE_ADMIN']);
-        $this->assertEquals(true, $this->authorizationDataProvider->getUserAttributes(null)['ROLE_WRITER']);
+        $this->assertEquals(false, $this->authorizationDataProvider->getUserAttributes('username')['ROLE_ADMIN']);
+        $this->assertEquals(true, $this->authorizationDataProvider->getUserAttributes('username')['ROLE_WRITER']);
+
+        $this->setUpUserSession('username', ['baz', 'bar']);
+
+        $this->assertEquals(true, $this->authorizationDataProvider->getUserAttributes('username')['ROLE_USER']);
+        $this->assertEquals(true, $this->authorizationDataProvider->getUserAttributes('username')['ROLE_ADMIN']);
+        $this->assertEquals(true, $this->authorizationDataProvider->getUserAttributes('username')['ROLE_WRITER']);
     }
 
-    private function setUpUserSession(array $scopes): void
+    private function setUpUserSession(string $userId, array $scopes): void
     {
-        $this->authorizationDataProvider = new AuthorizationDataProvider(new DummyUserSessionProvider('username', $scopes));
+        $this->authorizationDataProvider = new AuthorizationDataProvider(new DummyUserSessionProvider($userId, $scopes));
         $this->authorizationDataProvider->setConfig(self::createAuthorizationConfig());
     }
 

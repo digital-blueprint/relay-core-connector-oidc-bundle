@@ -139,4 +139,9 @@ class OIDCUserSessionProvider implements OIDCUserSessionProviderInterface
     {
         return $this->getSessionTTL();
     }
+
+    public function getSessionToken(): ?array
+    {
+        return $this->jwt;
+    }
 }

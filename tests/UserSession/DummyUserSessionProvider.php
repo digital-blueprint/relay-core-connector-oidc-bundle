@@ -24,6 +24,11 @@ class DummyUserSessionProvider implements OIDCUserSessionProviderInterface
     {
     }
 
+    public function getSessionToken(): ?array
+    {
+        return [];
+    }
+
     public function getScopes(): array
     {
         return $this->scopes;
