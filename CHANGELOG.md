@@ -1,5 +1,9 @@
 # Changelog
 
+## v0.1.36
+
+* Fix attribute access in case the user has no user ID.
+
 ## v0.1.35
 
 * Fix user attribute provider in case it is called outside of a request context,
