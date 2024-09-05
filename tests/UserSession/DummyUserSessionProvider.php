@@ -44,8 +44,18 @@ class DummyUserSessionProvider implements OIDCUserSessionProviderInterface
         return 'cache';
     }
 
+    public function getSessionCacheTTL(): int
+    {
+        return 42;
+    }
+
     public function getSessionTTL(): int
     {
         return 42;
+    }
+
+    public function isServiceAccount(): bool
+    {
+        return false;
     }
 }
