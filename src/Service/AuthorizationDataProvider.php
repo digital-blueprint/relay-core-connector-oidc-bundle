@@ -33,7 +33,7 @@ class AuthorizationDataProvider implements UserAttributeProviderInterface
     public function getUserAttributes(?string $userIdentifier): array
     {
         $userScopes = [];
-        if ($userIdentifier !== null && $this->userSessionProvider->getSessionToken() !== null && $this->userSessionProvider->getUserIdentifier() === $userIdentifier) {
+        if ($this->userSessionProvider->getSessionToken() !== null && $this->userSessionProvider->getUserIdentifier() === $userIdentifier) {
             $userScopes = $this->userSessionProvider->getScopes();
         }
 
