@@ -1,6 +1,6 @@
 # Changelog
 
-## v0.1.36
+## v0.1.37
 
 * Fix attribute access in case the user has no user ID.
 
