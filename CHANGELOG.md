@@ -1,5 +1,14 @@
 # Changelog
 
+## v0.1.34
+
+* Add new optional `user_identifier_claims` bundle config which allows users to
+  choose which claims to use as the user identifier. The default is the same as
+  before.
+* Provide a session ID spanning the lifetime of the token for service accounts
+  instead of a random one for each request.
+* Adjust for core bundle API breakage in v0.1.180
+
 ## v0.1.33
 
 * Minor cleanups
