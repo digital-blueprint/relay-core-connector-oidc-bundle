@@ -1,5 +1,10 @@
 # Changelog
 
+## v0.1.35
+
+* Fix user attribute provider in case it is called outside of a request context,
+  for example in health checks.
+
 ## v0.1.34
 
 * Add new optional `user_identifier_claims` bundle config which allows users to
