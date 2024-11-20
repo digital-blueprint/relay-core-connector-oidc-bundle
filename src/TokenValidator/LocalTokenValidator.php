@@ -69,6 +69,13 @@ class LocalTokenValidator extends TokenValidatorBase
             new Algorithm\PS256(),
             new Algorithm\PS384(),
             new Algorithm\PS512(),
+            new Algorithm\ES256(),
+            new Algorithm\ES384(),
+            new Algorithm\ES512(),
+            new Algorithm\HS256(),
+            new Algorithm\HS384(),
+            new Algorithm\HS512(),
+            new Algorithm\EdDSA(),
         ]);
 
         $jwsVerifier = new JWSVerifier(
