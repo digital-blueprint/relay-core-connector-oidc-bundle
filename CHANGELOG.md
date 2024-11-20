@@ -1,5 +1,10 @@
 # Changelog
 
+## v0.1.38
+
+* Add support for the following JWT signing algorithms: ES256, ES384, ES512, HS256, HS384, HS512, EdDSA
+  (previously only RS256, RS384, RS512, PS256, PS384, PS512 were supported)
+
 ## v0.1.37
 
 * Fix attribute access in case the user has no user ID.
