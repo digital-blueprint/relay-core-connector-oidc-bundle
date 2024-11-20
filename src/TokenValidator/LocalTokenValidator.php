@@ -53,8 +53,6 @@ class LocalTokenValidator extends TokenValidatorBase
         $issuer = $providerConfig->getIssuer();
         // Allow the same algorithms that the introspection endpoint allows
         $algs = $providerConfig->getIntrospectionEndpointSigningAlgorithms();
-        // The spec doesn't allow this, but just to be sure
-        assert(!in_array('none', $algs, true));
 
         $keySet = JWKSet::createFromKeyData($jwks);
 

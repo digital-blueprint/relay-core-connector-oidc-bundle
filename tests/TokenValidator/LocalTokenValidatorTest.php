@@ -94,6 +94,8 @@ class LocalTokenValidatorTest extends TestCase
                 'd' => 'nWGxne_9WmC6hEr0kuwsxERJxWl7MmkZcDusAxyuf2A',
                 'x' => '11qYAYKxCrfVS_7TyWQHOg7hcvPapiMlrwIaaPcHURo',
             ]);
+        } elseif ($alg === 'none') {
+            return new JWK(['kty' => 'none']);
         } else {
             throw new \RuntimeException('Unsupported alg: '.$alg);
         }
@@ -108,6 +110,7 @@ class LocalTokenValidatorTest extends TestCase
             $this->getJWK('ES384')->toPublic()->jsonSerialize(),
             $this->getJWK('ES512')->toPublic()->jsonSerialize(),
             $this->getJWK('EdDSA')->toPublic()->jsonSerialize(),
+            $this->getJWK('none')->toPublic()->jsonSerialize(),
         ]];
     }
 
@@ -157,6 +160,7 @@ class LocalTokenValidatorTest extends TestCase
             new Algorithm\HS384(),
             new Algorithm\HS512(),
             new Algorithm\EdDSA(),
+            new Algorithm\None(),
         ]);
         $serializer = new CompactSerializer();
         $jwsBuilder = new JWSBuilder($algorithmManager);
@@ -176,10 +180,12 @@ class LocalTokenValidatorTest extends TestCase
         $this->oid->setClientHandler($stack);
     }
 
-    private function mockJWKResponse()
+    private function mockJWKResponse(array $extraAlgs = [])
     {
         $jwks = $this->getPublicJWKs();
         $discover = $this->getDiscoverResponse();
+        $discover['introspection_endpoint_auth_signing_alg_values_supported'] = array_merge(
+            $discover['introspection_endpoint_auth_signing_alg_values_supported'], $extraAlgs);
         $this->mockResponses([
             new Response(200, ['Content-Type' => 'application/json'], json_encode($discover)),
             new Response(200, ['Content-Type' => 'application/json'], json_encode($jwks)),
@@ -223,11 +229,19 @@ class LocalTokenValidatorTest extends TestCase
     {
         $this->mockJWKResponse();
 
-        $jwt = $this->getJWT();
-        $payload = explode('.', $jwt)[1];
-        $noneToken = base64_encode('{"alg":"none","typ":"JWT"}').'.'.$payload.'.';
+        $jwt = $this->getJWT(alg: 'none');
         $this->expectExceptionMessageMatches('/Unable to load and verify the token/');
-        $this->tokenValidator->validate($noneToken);
+        $this->tokenValidator->validate($jwt);
+    }
+
+    public function testLocalNoneAlgoAdvertised()
+    {
+        // Even if the provider advertises 'none' (which is not allowed), we still want it to fail
+        $this->mockJWKResponse(extraAlgs: ['none']);
+
+        $jwt = $this->getJWT(alg: 'none');
+        $this->expectExceptionMessageMatches('/Unable to load and verify the token/');
+        $this->tokenValidator->validate($jwt);
     }
 
     public function testLocalExpired()
