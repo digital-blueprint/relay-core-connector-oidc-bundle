@@ -12,9 +12,15 @@ use GuzzleHttp\HandlerStack;
 use GuzzleHttp\Psr7\Response;
 use Jose\Component\Core\AlgorithmManager;
 use Jose\Component\Core\JWK;
+use Jose\Component\Signature\Algorithm\PS256;
+use Jose\Component\Signature\Algorithm\PS384;
+use Jose\Component\Signature\Algorithm\PS512;
 use Jose\Component\Signature\Algorithm\RS256;
+use Jose\Component\Signature\Algorithm\RS384;
+use Jose\Component\Signature\Algorithm\RS512;
 use Jose\Component\Signature\JWSBuilder;
 use Jose\Component\Signature\Serializer\CompactSerializer;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 
 class LocalTokenValidatorTest extends TestCase
@@ -61,11 +67,14 @@ class LocalTokenValidatorTest extends TestCase
             'issuer' => 'https://nope/issuer',
             'jwks_uri' => 'https://nope/certs',
             'introspection_endpoint' => 'https://nope/introspect',
-            'introspection_endpoint_auth_signing_alg_values_supported' => ['RS256'],
+            'introspection_endpoint_auth_signing_alg_values_supported' => [
+                'RS256', 'RS384', 'RS512',
+                'PS256', 'PS384', 'PS512',
+            ],
         ];
     }
 
-    private function getJWT(?int $time = null, ?string $issuer = null): string
+    private function getJWT(?int $time = null, ?string $issuer = null, string $alg = 'RS256'): string
     {
         $jwk = $this->getJWK();
 
@@ -83,6 +92,11 @@ class LocalTokenValidatorTest extends TestCase
 
         $algorithmManager = new AlgorithmManager([
             new RS256(),
+            new RS384(),
+            new RS512(),
+            new PS256(),
+            new PS384(),
+            new PS512(),
         ]);
         $serializer = new CompactSerializer();
         $jwsBuilder = new JWSBuilder($algorithmManager);
@@ -90,7 +104,7 @@ class LocalTokenValidatorTest extends TestCase
         $jws = $jwsBuilder
             ->create()
             ->withPayload($payload)
-            ->addSignature($jwk, ['alg' => 'RS256'])
+            ->addSignature($jwk, ['alg' => $alg])
             ->build();
 
         return $serializer->serialize($jws, 0);
@@ -194,11 +208,20 @@ class LocalTokenValidatorTest extends TestCase
         $this->tokenValidator->validate(implode('.', $parts));
     }
 
-    public function testLocalValid()
+    public static function allAlgos(): array
+    {
+        return [
+            ['RS256'], ['RS384'], ['RS512'],
+            ['PS256'], ['PS384'], ['PS512'],
+        ];
+    }
+
+    #[DataProvider('allAlgos')]
+    public function testLocalValid($alg)
     {
         $this->mockJWKResponse();
 
-        $jwt = $this->getJWT();
+        $jwt = $this->getJWT(alg: $alg);
         $result = $this->tokenValidator->validate($jwt);
         $this->assertEquals('subject', $result['sub']);
     }
