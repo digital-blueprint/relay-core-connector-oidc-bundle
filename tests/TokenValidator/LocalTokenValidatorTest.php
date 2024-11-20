@@ -65,18 +65,18 @@ class LocalTokenValidatorTest extends TestCase
         ];
     }
 
-    private function getJWT(array $options = []): string
+    private function getJWT(?int $time = null, ?string $issuer = null): string
     {
         $jwk = $this->getJWK();
 
-        $time = $options['time'] ?? time();
+        $time ??= time();
 
         $payload = json_encode([
             'exp' => $time + 3600,
             'iat' => $time,
             'nbf' => $time,
             'jti' => '0123456789',
-            'iss' => $options['issuer'] ?? $this->oid->getProviderConfig()->getIssuer(),
+            'iss' => $issuer ?? $this->oid->getProviderConfig()->getIssuer(),
             'aud' => ['audience1', 'audience2'],
             'sub' => 'subject',
         ]);
@@ -160,7 +160,7 @@ class LocalTokenValidatorTest extends TestCase
     {
         $this->mockJWKResponse();
 
-        $jwt = $this->getJWT(['time' => 42]);
+        $jwt = $this->getJWT(time: 42);
         $this->expectExceptionMessageMatches('/expired/');
         $this->tokenValidator->validate($jwt);
     }
@@ -169,7 +169,7 @@ class LocalTokenValidatorTest extends TestCase
     {
         $this->mockJWKResponse();
 
-        $jwt = $this->getJWT(['time' => time() + 3600]);
+        $jwt = $this->getJWT(time: time() + 3600);
         $this->expectExceptionMessageMatches('/future/');
         $this->tokenValidator->validate($jwt);
     }
@@ -179,7 +179,7 @@ class LocalTokenValidatorTest extends TestCase
         $this->mockJWKResponse();
 
         $this->expectExceptionMessageMatches('/Unknown issuer/');
-        $this->tokenValidator->validate($this->getJWT(['issuer' => 'foobar']));
+        $this->tokenValidator->validate($this->getJWT(issuer: 'foobar'));
     }
 
     public function testLocalInvalidSig()
