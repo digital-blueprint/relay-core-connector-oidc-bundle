@@ -110,3 +110,19 @@ Possible usage scenarios:
 * In case you have an OIDC system with service accounts that don't have a user
   ID you could set it to `['azp']` or append it as a fallback, so that service
   accounts get a user ID based on the client ID.
+
+## Authorization Attributes
+
+`authorization_attributes` allows you to set authorization attributes based on
+the scopes present in the OIDC token. If the user's token contains any of the
+listed scopes, the user is granted the respective authorization attribute, i.e.
+its value evaluates to 'true' if requested.
+
+For example, if the user's token contains the scope `admin`, the user is granted
+the authorization attribute `admin`.
+
+```yaml
+authorization_attributes:
+  - name: 'admin'
+    scopes: ['admin']
+```
