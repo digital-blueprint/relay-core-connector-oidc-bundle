@@ -85,3 +85,28 @@ new client with an ID of your choosing:
 
 * `remote_validation_id` is the "Client ID" of the client visible on the "Settings" page
 * `remote_validation_secret` is the "Secret" of the client visible on the "Credentials" page
+
+## User Identifier Selection
+
+The list of claims specified in `user_identifier_claims` will be tried in the
+given order. The first one that exists in the OIDC token will be used as the
+user identifier. If none of the claims can be found then the user will be
+authenticated but without a user ID.
+
+You need to make sure that the used claim is unique across all possible users
+and clients and that it is not possible to change it by the user. Otherwise
+users could impersonate each other.
+
+Possible usage scenarios:
+
+* The defaults `['preferred_username', 'username']` assumes that the OIDC
+  provider is used with user federation, for example when the users are managed
+  provided by an LDAP server and the LDAP username is mapped into the token to
+  `preferred_username` or `username`.
+
+* In case the OIDC provider is the source of truth for the users then you could
+  set it to `['sub']` to use the OIDC user ID directly.
+
+* In case you have an OIDC system with service accounts that don't have a user
+  ID you could set it to `['azp']` or append it as a fallback, so that service
+  accounts get a user ID based on the client ID.
