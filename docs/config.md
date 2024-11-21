@@ -32,12 +32,18 @@ dbp_relay_core_connector_oidc:
   remote_validation_secret: ~ # Example: mysecret
   # The client ID for the OIDC client (authorization code flow) used for API docs and other frontends provided by the API itself
   frontend_client_id:   ~ # Example: client-docs
+  # The claims used for the user identifier. The first claim found in the token will be used.
+  user_identifier_claims:
+    # Defaults:
+    - preferred_username
+    - username
   # The authorization attributes that are available for users and derived from OIDC token scopes
   authorization_attributes:
     # Prototype
     -
       name:                 ~
-      scope:                ~
+      # If the user's token contains any of the listed scopes, the user is granted the respective authorization attribute, i.e. its value evaluates to 'true' if requested
+      scopes:               []
 
 ```
 

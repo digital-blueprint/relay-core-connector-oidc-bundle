@@ -20,7 +20,7 @@ class Configuration implements ConfigurationInterface
             ->children()
                 // Note: "<server_url>/.well-known/openid-configuration" has to exist
                 ->scalarNode('server_url')
-                    ->info('The base URL for the OIDC server (in case of Keycloak fort the specific realm)')
+                    ->info('The base URL for the OIDC server (in case of Keycloak for the specific realm)')
                     ->example('https://keycloak.example.com/auth/realms/my-realm')
                 ->end()
 
