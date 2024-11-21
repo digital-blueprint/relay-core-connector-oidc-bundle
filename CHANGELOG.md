@@ -1,5 +1,9 @@
 # Changelog
 
+## Unreleased
+
+* config: removed support for the deprecated authorization_attributes.scope key, use authorization_attributes.scopes instead.
+
 ## v0.1.38
 
 * Add support for the following JWT signing algorithms: ES256, ES384, ES512, HS256, HS384, HS512, EdDSA

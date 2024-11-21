@@ -22,20 +22,6 @@ class AuthorizationDataProviderTest extends TestCase
         $this->assertEquals(['ROLE_USER', 'ROLE_ADMIN', 'ROLE_WRITER'], $this->authorizationDataProvider->getAvailableAttributes());
     }
 
-    public function testUserAttributesDeprecatedScopeAttribute(): void
-    {
-        // NOTE: user identifier is not required
-        $this->setUpUserSession('username', ['__', 'user']);
-
-        $this->assertEquals(true, $this->authorizationDataProvider->getUserAttributes('username')['ROLE_USER']);
-        $this->assertEquals(false, $this->authorizationDataProvider->getUserAttributes('username')['ROLE_ADMIN']);
-
-        $this->setUpUserSession('username', ['admin', '_', '__']);
-
-        $this->assertEquals(false, $this->authorizationDataProvider->getUserAttributes('username')['ROLE_USER']);
-        $this->assertEquals(true, $this->authorizationDataProvider->getUserAttributes('username')['ROLE_ADMIN']);
-    }
-
     public function testUserAttributes(): void
     {
         // NOTE: user identifier is not required
@@ -76,12 +62,10 @@ class AuthorizationDataProviderTest extends TestCase
             'authorization_attributes' => [
                 [
                     'name' => 'ROLE_USER',
-                    'scope' => 'user',
                     'scopes' => ['foo', 'bar'],
                 ],
                 [
                     'name' => 'ROLE_ADMIN',
-                    'scope' => 'admin',
                     'scopes' => ['baz'],
                 ],
                 [

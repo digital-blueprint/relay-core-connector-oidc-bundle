@@ -56,9 +56,6 @@ class AuthorizationDataProvider implements UserAttributeProviderInterface
     {
         foreach ($attributes as $attribute) {
             $scopes = $attribute[Configuration::SCOPES_ATTRIBUTE] ?? [];
-            if (($scopeDeprecated = $attribute[Configuration::SCOPE_ATTRIBUTE] ?? null) !== null) {
-                $scopes[] = $scopeDeprecated;
-            }
             $this->attributeToScopeMap[$attribute[Configuration::NAME_ATTRIBUTE]] = $scopes;
         }
     }

@@ -10,7 +10,6 @@ use Symfony\Component\Config\Definition\ConfigurationInterface;
 class Configuration implements ConfigurationInterface
 {
     public const NAME_ATTRIBUTE = 'name';
-    public const SCOPE_ATTRIBUTE = 'scope';
     public const SCOPES_ATTRIBUTE = 'scopes';
     public const ATTRIBUTES_ATTRIBUTE = 'authorization_attributes';
 
@@ -87,9 +86,6 @@ class Configuration implements ConfigurationInterface
                     ->arrayPrototype()
                         ->children()
                             ->scalarNode(self::NAME_ATTRIBUTE)->end()
-                            ->scalarNode(self::SCOPE_ATTRIBUTE)
-                               ->setDeprecated('dbp/relay-core-connector-oidc-bundle', '0.1.21', 'Use \'scopes\' instead')
-                            ->end()
                             ->arrayNode(self::SCOPES_ATTRIBUTE)
                                ->info('If the user\'s token contains any of the listed scopes, the user is granted the respective authorization attribute, i.e. its value evaluates to \'true\' if requested')
                                ->scalarPrototype()->end()
