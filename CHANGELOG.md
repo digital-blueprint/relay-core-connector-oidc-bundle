@@ -3,6 +3,7 @@
 ## Unreleased
 
 * config: removed support for the deprecated authorization_attributes.scope key, use authorization_attributes.scopes instead.
+* Add support for kevinrob/guzzle-cache-middleware v6
 
 ## v0.1.38
 
