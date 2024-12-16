@@ -2,8 +2,13 @@
 
 ## Unreleased
 
+## v0.1.39
+
 * config: removed support for the deprecated authorization_attributes.scope key, use authorization_attributes.scopes instead.
 * Add support for kevinrob/guzzle-cache-middleware v6
+* Various docs updates
+* Test with PHP 8.4
+* Port to phpstan v2
 
 ## v0.1.38
 
