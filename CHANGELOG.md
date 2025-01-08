@@ -2,6 +2,10 @@
 
 ## Unreleased
 
+## v0.1.40
+
+* config: add new `set_symfony_roles_from_scopes` option, to allow disabling the default scope to role mapping.
+
 ## v0.1.39
 
 * config: removed support for the deprecated authorization_attributes.scope key, use authorization_attributes.scopes instead.
