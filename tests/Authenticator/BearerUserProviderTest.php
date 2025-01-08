@@ -19,9 +19,12 @@ class BearerUserProviderTest extends ApiTestCase
         $oid = new OIDProvider();
         $udprov = new DummyUserSessionProvider('foo');
         $prov = new BearerUserProvider($udprov, $oid, new DefaultUserRoles());
-        $user = $prov->loadUserByValidatedToken([]);
+        $prov->setConfig([
+            'set_symfony_roles_from_scopes' => true,
+        ]);
+        $user = $prov->loadUserByValidatedToken(['scope' => 'foo bar']);
         $this->assertSame('foo', $user->getUserIdentifier());
-        $this->assertSame([], $user->getRoles());
+        $this->assertSame(['ROLE_SCOPE_FOO', 'ROLE_SCOPE_BAR'], $user->getRoles());
     }
 
     public function testWithoutIdentifier()
@@ -29,8 +32,24 @@ class BearerUserProviderTest extends ApiTestCase
         $oid = new OIDProvider();
         $udprov = new DummyUserSessionProvider(null);
         $prov = new BearerUserProvider($udprov, $oid, new DefaultUserRoles());
-        $user = $prov->loadUserByValidatedToken([]);
+        $prov->setConfig([
+            'set_symfony_roles_from_scopes' => true,
+        ]);
+        $user = $prov->loadUserByValidatedToken(['scope' => 'foo bar']);
         $this->assertSame('', $user->getUserIdentifier());
+        $this->assertSame(['ROLE_SCOPE_FOO', 'ROLE_SCOPE_BAR'], $user->getRoles());
+    }
+
+    public function testWithSymfonyRolesDisabled()
+    {
+        $oid = new OIDProvider();
+        $udprov = new DummyUserSessionProvider('foo');
+        $prov = new BearerUserProvider($udprov, $oid, new DefaultUserRoles());
+        $prov->setConfig([
+            'set_symfony_roles_from_scopes' => false,
+        ]);
+        $user = $prov->loadUserByValidatedToken(['scope' => 'foo bar']);
+        $this->assertSame('foo', $user->getUserIdentifier());
         $this->assertSame([], $user->getRoles());
     }
 

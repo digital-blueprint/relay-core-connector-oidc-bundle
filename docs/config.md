@@ -15,7 +15,7 @@ created via `./bin/console config:dump-reference DbpRelayCoreConnectorOidcBundle
 ```yaml
 # Default configuration for "DbpRelayCoreConnectorOidcBundle"
 dbp_relay_core_connector_oidc:
-  # The base URL for the OIDC server (in case of Keycloak fort the specific realm)
+  # The base URL for the OIDC server (in case of Keycloak for the specific realm)
   server_url:           ~ # Example: 'https://keycloak.example.com/auth/realms/my-realm'
   # If set only tokens which contain this audience are accepted (optional)
   required_audience:    ~ # Example: my-api
@@ -37,6 +37,10 @@ dbp_relay_core_connector_oidc:
     # Defaults:
     - preferred_username
     - username
+  # Convert the token scopes to Symfony roles and set them on the user.
+  # By default, scopes will be converted to upper-case and prefixed with 'ROLE_SCOPE_',
+  # so 'some-scope' will result in the 'ROLE_SCOPE_SOME_SCOPE' Symfony role being set.
+  set_symfony_roles_from_scopes: true
   # The authorization attributes that are available for users and derived from OIDC token scopes
   authorization_attributes:
     # Prototype

@@ -64,6 +64,10 @@ class Configuration implements ConfigurationInterface
                         'username',
                     ])
                 ->end()
+                ->booleanNode('set_symfony_roles_from_scopes')
+                    ->info("Convert the token scopes to Symfony roles and set them on the user.\nBy default, scopes will be converted to upper-case and prefixed with 'ROLE_SCOPE_',\nso 'some-scope' will result in the 'ROLE_SCOPE_SOME_SCOPE' Symfony role being set.")
+                    ->defaultTrue()
+                ->end()
 
                 // [DEPRECATED]
                 ->scalarNode('frontend_keycloak_server')
