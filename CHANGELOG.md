@@ -2,6 +2,9 @@
 
 ## Unreleased
 
+* Drop support for PHP 8.1
+* Drop support for Symfony 5
+
 ## v0.1.40
 
 * config: add new `set_symfony_roles_from_scopes` option, to allow disabling the default scope to role mapping.
