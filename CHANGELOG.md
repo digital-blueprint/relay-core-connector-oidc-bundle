@@ -1,6 +1,6 @@
 # Changelog
 
-## Unreleased
+## v0.1.41
 
 * Drop support for PHP 8.1
 * Drop support for Symfony 5
