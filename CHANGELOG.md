@@ -1,5 +1,9 @@
 # Changelog
 
+## v0.1.42
+
+* Add support for web-token/jwt-library v4
+
 ## v0.1.41
 
 * Drop support for PHP 8.1
