@@ -102,9 +102,9 @@ class LocalTokenValidator extends TokenValidatorBase
             // * jti: Nothing we know beforehand
             // * aud: The audience needs to be checked afterwards with checkAudience()
             $claimCheckerManager = new ClaimCheckerManager([
-                new Checker\IssuedAtChecker($this->leewaySeconds, clock: $clock),
-                new Checker\NotBeforeChecker($this->leewaySeconds, clock: $clock),
-                new Checker\ExpirationTimeChecker($this->leewaySeconds, clock: $clock),
+                new Checker\IssuedAtChecker(clock: $clock, allowedTimeDrift: $this->leewaySeconds),
+                new Checker\NotBeforeChecker(clock: $clock, allowedTimeDrift: $this->leewaySeconds),
+                new Checker\ExpirationTimeChecker(clock: $clock, allowedTimeDrift: $this->leewaySeconds),
                 new Checker\IssuerChecker([$issuer]),
             ]);
             $claimCheckerManager->check($jwt);
