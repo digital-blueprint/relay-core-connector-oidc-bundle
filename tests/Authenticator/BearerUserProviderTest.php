@@ -4,15 +4,15 @@ declare(strict_types=1);
 
 namespace Dbp\Relay\CoreConnectorOidcBundle\Tests\Authenticator;
 
-use ApiPlatform\Symfony\Bundle\Test\ApiTestCase;
 use Dbp\Relay\CoreConnectorOidcBundle\Authenticator\BearerUserProvider;
 use Dbp\Relay\CoreConnectorOidcBundle\OIDCProvider\OIDProvider;
 use Dbp\Relay\CoreConnectorOidcBundle\Service\DefaultUserRoles;
 use Dbp\Relay\CoreConnectorOidcBundle\Tests\UserSession\DummyUserSessionProvider;
+use PHPUnit\Framework\TestCase;
 use Psr\Log\NullLogger;
 use Symfony\Component\Security\Core\Exception\AuthenticationException;
 
-class BearerUserProviderTest extends ApiTestCase
+class BearerUserProviderTest extends TestCase
 {
     public function testWithIdentifier()
     {

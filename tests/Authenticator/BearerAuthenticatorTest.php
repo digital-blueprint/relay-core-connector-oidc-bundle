@@ -4,18 +4,18 @@ declare(strict_types=1);
 
 namespace Dbp\Relay\CoreConnectorOidcBundle\Tests\Authenticator;
 
-use ApiPlatform\Symfony\Bundle\Test\ApiTestCase;
 use Dbp\Relay\CoreConnectorOidcBundle\Authenticator\BearerAuthenticator;
 use Dbp\Relay\CoreConnectorOidcBundle\Authenticator\BearerUser;
 use Dbp\Relay\CoreConnectorOidcBundle\Tests\DummyUserProvider;
 use Dbp\Relay\CoreConnectorOidcBundle\Tests\UserSession\DummyUserSessionProvider;
+use PHPUnit\Framework\TestCase;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\Authentication\Token\NullToken;
 use Symfony\Component\Security\Core\Exception\AuthenticationException;
 use Symfony\Component\Security\Core\Exception\BadCredentialsException;
 use Symfony\Component\Security\Http\Authenticator\Passport\Badge\UserBadge;
 
-class BearerAuthenticatorTest extends ApiTestCase
+class BearerAuthenticatorTest extends TestCase
 {
     public function testAuthenticateNoHeader()
     {
