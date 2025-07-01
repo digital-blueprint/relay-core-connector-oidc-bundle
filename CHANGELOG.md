@@ -1,5 +1,9 @@
 # Changelog
 
+## Unreleased
+
+* Update core and adapt
+
 ## v0.1.42
 
 * Add support for web-token/jwt-library v4

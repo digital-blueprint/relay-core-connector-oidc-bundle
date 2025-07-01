@@ -8,16 +8,13 @@ use Dbp\Relay\CoreBundle\User\UserAttributeProviderInterface;
 use Dbp\Relay\CoreConnectorOidcBundle\DependencyInjection\Configuration;
 use Dbp\Relay\CoreConnectorOidcBundle\UserSession\OIDCUserSessionProviderInterface;
 
-class AuthorizationDataProvider implements UserAttributeProviderInterface
+class UserAttributeProvider implements UserAttributeProviderInterface
 {
     /** @var string[][] */
     private array $attributeToScopeMap = [];
 
-    private OIDCUserSessionProviderInterface $userSessionProvider;
-
-    public function __construct(OIDCUserSessionProviderInterface $userSessionProvider)
+    public function __construct(private readonly OIDCUserSessionProviderInterface $userSessionProvider)
     {
-        $this->userSessionProvider = $userSessionProvider;
     }
 
     public function setConfig(array $config): void
@@ -25,31 +22,31 @@ class AuthorizationDataProvider implements UserAttributeProviderInterface
         $this->loadAttributeToScopeMapFromConfig($config[Configuration::ATTRIBUTES_ATTRIBUTE]);
     }
 
-    public function getAvailableAttributes(): array
+    public function hasUserAttribute(string $name): bool
     {
-        return array_keys($this->attributeToScopeMap);
+        return array_key_exists($name, $this->attributeToScopeMap);
     }
 
-    public function getUserAttributes(?string $userIdentifier): array
+    public function getUserAttribute(?string $userIdentifier, string $name): mixed
     {
         $userScopes = [];
-        if ($this->userSessionProvider->getSessionToken() !== null && $this->userSessionProvider->getUserIdentifier() === $userIdentifier) {
+        if ($this->userSessionProvider->getSessionToken() !== null
+            && $this->userSessionProvider->getUserIdentifier() === $userIdentifier) {
             $userScopes = $this->userSessionProvider->getScopes();
         }
 
-        $userAttributes = [];
-        foreach ($this->attributeToScopeMap as $attribute => $scopes) {
-            $userAttribute = false;
-            foreach ($scopes as $scope) {
-                if (in_array($scope, $userScopes, true)) {
-                    $userAttribute = true;
-                    break;
-                }
+        foreach ($this->attributeToScopeMap[$name] ?? [] as $scope) {
+            if (in_array($scope, $userScopes, true)) {
+                return true;
             }
-            $userAttributes[$attribute] = $userAttribute;
         }
 
-        return $userAttributes;
+        return false;
+    }
+
+    public function getAvailableAttributes(): array
+    {
+        return array_keys($this->attributeToScopeMap);
     }
 
     private function loadAttributeToScopeMapFromConfig(array $attributes): void

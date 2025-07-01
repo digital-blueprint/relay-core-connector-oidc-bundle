@@ -39,7 +39,7 @@ services:
   Dbp\Relay\CoreConnectorOidcBundle\API\UserRolesInterface:
     '@Dbp\Relay\CoreConnectorOidcBundle\Service\DefaultUserRoles'
 
-  Dbp\Relay\CoreConnectorOidcBundle\Service\AuthorizationDataProvider:
+  Dbp\Relay\CoreConnectorOidcBundle\Service\UserAttributeProvider:
     autowire: true
     autoconfigure: true
 
