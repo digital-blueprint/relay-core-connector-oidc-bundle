@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+## v0.1.43
+
 * Update core and adapt
 
 ## v0.1.42
