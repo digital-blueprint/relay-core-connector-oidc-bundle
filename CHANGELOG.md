@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+* Import `services_test.yaml` from the core bundle for testing
+
 ## v0.1.43
 
 * Update core and adapt
