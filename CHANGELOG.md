@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+## v0.1.45
+
 - Modernize PHP code
 - Allow for the mapping of token claims to authz user attributes
 
