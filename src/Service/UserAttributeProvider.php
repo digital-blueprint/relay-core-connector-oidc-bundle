@@ -8,10 +8,16 @@ use Dbp\Relay\CoreBundle\User\UserAttributeProviderInterface;
 use Dbp\Relay\CoreConnectorOidcBundle\DependencyInjection\Configuration;
 use Dbp\Relay\CoreConnectorOidcBundle\UserSession\OIDCUserSessionProviderInterface;
 
+/**
+ * @internal
+ */
 class UserAttributeProvider implements UserAttributeProviderInterface
 {
-    /** @var string[][] */
-    private array $attributeToScopeMap = [];
+    private const SCOPE_ATTRIBUTE = 'scopes';
+    private const CLAIM_ATTRIBUTE = 'claim';
+
+    /** @var array[] */
+    private array $userAttributesConfig = [];
 
     public function __construct(private readonly OIDCUserSessionProviderInterface $userSessionProvider)
     {
@@ -19,12 +25,12 @@ class UserAttributeProvider implements UserAttributeProviderInterface
 
     public function setConfig(array $config): void
     {
-        $this->loadAttributeToScopeMapFromConfig($config[Configuration::ATTRIBUTES_ATTRIBUTE]);
+        $this->loadUserAttributesConfig($config[Configuration::ATTRIBUTES_NODE]);
     }
 
     public function hasUserAttribute(string $name): bool
     {
-        return array_key_exists($name, $this->attributeToScopeMap);
+        return array_key_exists($name, $this->userAttributesConfig);
     }
 
     public function getUserAttribute(?string $userIdentifier, string $name): mixed
@@ -35,25 +41,26 @@ class UserAttributeProvider implements UserAttributeProviderInterface
             $userScopes = $this->userSessionProvider->getScopes();
         }
 
-        foreach ($this->attributeToScopeMap[$name] ?? [] as $scope) {
-            if (in_array($scope, $userScopes, true)) {
-                return true;
-            }
+        $userAttributeConfig = $this->userAttributesConfig[$name] ?? [];
+        if ([] !== $userAttributeConfig[self::SCOPE_ATTRIBUTE]) {
+            return array_intersect($userScopes, $userAttributeConfig[self::SCOPE_ATTRIBUTE]) !== [];
+        } elseif (($claim = $userAttributeConfig[self::CLAIM_ATTRIBUTE])
+            && ($sessionToken = $this->userSessionProvider->getSessionToken())) {
+            return $sessionToken[$claim] ?? null;
         }
 
-        return false;
+        return null;
     }
 
-    public function getAvailableAttributes(): array
+    private function loadUserAttributesConfig(array $attributesConfig): void
     {
-        return array_keys($this->attributeToScopeMap);
-    }
-
-    private function loadAttributeToScopeMapFromConfig(array $attributes): void
-    {
-        foreach ($attributes as $attribute) {
-            $scopes = $attribute[Configuration::SCOPES_ATTRIBUTE] ?? [];
-            $this->attributeToScopeMap[$attribute[Configuration::NAME_ATTRIBUTE]] = $scopes;
+        foreach ($attributesConfig as $attributeConfig) {
+            $scopes = $attributeConfig[Configuration::SCOPES_NODE] ?? [];
+            $claim = $attributeConfig[Configuration::CLAIM_NODE] ?? null;
+            $this->userAttributesConfig[$attributeConfig[Configuration::NAME_NODE]] = [
+                self::SCOPE_ATTRIBUTE => $scopes,
+                self::CLAIM_ATTRIBUTE => $claim,
+            ];
         }
     }
 }

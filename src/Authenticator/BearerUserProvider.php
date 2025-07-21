@@ -19,32 +19,25 @@ use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Contracts\Cache\CacheInterface;
 use Symfony\Contracts\Cache\ItemInterface;
 
+/**
+ * @internal
+ */
 class BearerUserProvider implements BearerUserProviderInterface, LoggerAwareInterface
 {
     use LoggerAwareTrait;
 
-    private $config;
-    private $userSession;
-    private $oidProvider;
-    /**
-     * @var UserRolesInterface
-     */
-    private $userRoles;
-    /**
-     * @var CacheInterface
-     */
-    private $cachePool;
+    private array $config = [];
+    private CacheInterface $cachePool;
 
-    public function __construct(OIDCUserSessionProviderInterface $userSession, OIDProvider $oidProvider, UserRolesInterface $userRoles)
+    public function __construct(
+        private readonly OIDCUserSessionProviderInterface $userSessionProvider,
+        private readonly OIDProvider $oidProvider,
+        private readonly UserRolesInterface $userRoles)
     {
-        $this->userSession = $userSession;
-        $this->config = [];
-        $this->oidProvider = $oidProvider;
-        $this->userRoles = $userRoles;
         $this->cachePool = new ArrayAdapter();
     }
 
-    public function setConfig(array $config)
+    public function setConfig(array $config): void
     {
         $this->config = $config;
     }
@@ -101,33 +94,37 @@ class BearerUserProvider implements BearerUserProviderInterface, LoggerAwareInte
     /**
      * @return string[]
      */
-    private function getUserRoles(?string $userIdentifier, array $scopes): array
+    private function getSymfonyRolesFromScopes(?string $userIdentifier, array $scopes): array
     {
-        $setSymfonyRolesFromScopes = $this->config['set_symfony_roles_from_scopes'];
-        if (!$setSymfonyRolesFromScopes) {
-            return [];
+        $symfonyRoles = [];
+        if ($this->config['set_symfony_roles_from_scopes']) {
+            try {
+                $cacheKey = Tools::escapeCacheKey(json_encode(
+                    [$this->userSessionProvider->getSessionCacheKey(), $userIdentifier, $scopes],
+                    JSON_THROW_ON_ERROR));
+
+                $symfonyRoles = $this->cachePool->get($cacheKey,
+                    function (ItemInterface $item) use ($scopes, $userIdentifier): array {
+                        $item->expiresAfter($this->userSessionProvider->getSessionCacheTTL());
+
+                        return $this->userRoles->getRoles($userIdentifier, $scopes);
+                    });
+            } catch (\Throwable) {
+                throw new \RuntimeException('failed to set symfony roles from scopes');
+            }
         }
 
-        $cacheKey = Tools::escapeCacheKey(json_encode([$this->userSession->getSessionCacheKey(), $userIdentifier, $scopes], JSON_THROW_ON_ERROR));
-
-        return $this->cachePool->get($cacheKey, function (ItemInterface $item) use ($scopes, $userIdentifier): array {
-            $item->expiresAfter($this->userSession->getSessionCacheTTL());
-
-            return $this->userRoles->getRoles($userIdentifier, $scopes);
-        });
+        return $symfonyRoles;
     }
 
     public function loadUserByValidatedToken(array $jwt): UserInterface
     {
-        $session = $this->userSession;
-        $session->setSessionToken($jwt);
-        $scopes = Tools::extractScopes($jwt);
-        $identifier = $session->getUserIdentifier();
-        $userRoles = $this->getUserRoles($identifier, $scopes);
+        $this->userSessionProvider->setSessionToken($jwt);
+        $identifier = $this->userSessionProvider->getUserIdentifier();
 
         return new BearerUser(
             $identifier,
-            $userRoles
+            $this->getSymfonyRolesFromScopes($identifier, Tools::extractScopes($jwt))
         );
     }
 }

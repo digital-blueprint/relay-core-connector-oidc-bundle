@@ -7,24 +7,16 @@ namespace Dbp\Relay\CoreConnectorOidcBundle\UserSession;
 use Dbp\Relay\CoreConnectorOidcBundle\Helpers\Tools;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 
+/**
+ * @internal
+ */
 class OIDCUserSessionProvider implements OIDCUserSessionProviderInterface
 {
-    /**
-     * @var ?array
-     */
-    private $jwt;
+    private ?array $jwt = null;
+    private array $userIdentifierClaims = [];
 
-    /**
-     * @var ParameterBagInterface
-     */
-    private $parameters;
-    private array $userIdentifierClaims;
-
-    public function __construct(ParameterBagInterface $parameters)
+    public function __construct(private readonly ParameterBagInterface $parameters)
     {
-        $this->jwt = null;
-        $this->parameters = $parameters;
-        $this->userIdentifierClaims = [];
     }
 
     public function setConfig(array $config): void
@@ -62,11 +54,9 @@ class OIDCUserSessionProvider implements OIDCUserSessionProviderInterface
     {
         $scopes = Tools::extractScopes($jwt);
 
-        // XXX: This is the main difference I found compared to other flows, but that's a Keycloak
-        // implementation detail I guess.
-        $has_openid_scope = in_array('openid', $scopes, true);
-
-        return !$has_openid_scope;
+        // XXX: This is the main difference I found compared to other flows,
+        // but that's a Keycloak implementation detail, I guess.
+        return false === in_array('openid', $scopes, true);
     }
 
     public function setSessionToken(?array $jwt): void

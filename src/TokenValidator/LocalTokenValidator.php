@@ -20,15 +20,15 @@ use Jose\Component\Signature\Serializer\CompactSerializer;
 use Jose\Component\Signature\Serializer\JWSSerializerManager;
 use Symfony\Component\Clock\NativeClock;
 
+/**
+ * @internal
+ */
 class LocalTokenValidator extends TokenValidatorBase
 {
-    private $oidProvider;
-    private $leewaySeconds;
-
-    public function __construct(OIDProvider $oidProvider, int $leewaySeconds)
+    public function __construct(
+        private readonly OIDProvider $oidProvider,
+        private readonly int $leewaySeconds)
     {
-        $this->oidProvider = $oidProvider;
-        $this->leewaySeconds = $leewaySeconds;
     }
 
     /**

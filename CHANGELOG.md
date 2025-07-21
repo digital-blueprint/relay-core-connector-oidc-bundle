@@ -2,6 +2,9 @@
 
 ## Unreleased
 
+- Modernize PHP code
+- Allow for the mapping of token claims to authz user attributes
+
 ## v0.1.44
 
 - Import `services_test.yaml` from the core bundle for testing

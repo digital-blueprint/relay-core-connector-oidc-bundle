@@ -32,7 +32,7 @@ class Tools
     public static function escapeCacheKey(string $input): string
     {
         // Always append a '.' since empty strings are also not allowed.
-        // For what isn't allowed see ItemInterface::RESERVED_CHARACTERS
+        // For what isn't allowed, see ItemInterface::RESERVED_CHARACTERS
         return rawurlencode($input.'.');
     }
 }

@@ -6,6 +6,9 @@ namespace Dbp\Relay\CoreConnectorOidcBundle\Service;
 
 use Dbp\Relay\CoreConnectorOidcBundle\API\UserRolesInterface;
 
+/**
+ * @internal
+ */
 class DefaultUserRoles implements UserRolesInterface
 {
     /**

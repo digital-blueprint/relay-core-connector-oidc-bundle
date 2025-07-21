@@ -9,9 +9,10 @@ use Symfony\Component\Config\Definition\ConfigurationInterface;
 
 class Configuration implements ConfigurationInterface
 {
-    public const NAME_ATTRIBUTE = 'name';
-    public const SCOPES_ATTRIBUTE = 'scopes';
-    public const ATTRIBUTES_ATTRIBUTE = 'authorization_attributes';
+    public const NAME_NODE = 'name';
+    public const SCOPES_NODE = 'scopes';
+    public const CLAIM_NODE = 'claim';
+    public const ATTRIBUTES_NODE = 'authorization_attributes';
 
     public function getConfigTreeBuilder(): TreeBuilder
     {
@@ -85,15 +86,23 @@ class Configuration implements ConfigurationInterface
                     ->info('The ID for the keycloak client (authorization code flow) used for API docs or similar')
                     ->example('client-docs')
                 ->end()
-                ->arrayNode(self::ATTRIBUTES_ATTRIBUTE)
+                ->arrayNode(self::ATTRIBUTES_NODE)
                     ->info('The authorization attributes that are available for users and derived from OIDC token scopes')
                     ->arrayPrototype()
                         ->children()
-                            ->scalarNode(self::NAME_ATTRIBUTE)->end()
-                            ->arrayNode(self::SCOPES_ATTRIBUTE)
+                            ->scalarNode(self::NAME_NODE)->end()
+                            ->arrayNode(self::SCOPES_NODE)
                                ->info('If the user\'s token contains any of the listed scopes, the user is granted the respective authorization attribute, i.e. its value evaluates to \'true\' if requested')
                                ->scalarPrototype()->end()
                             ->end()
+                            ->scalarNode(self::CLAIM_NODE)
+                            ->end()
+                        ->end()
+                        ->validate()
+                            ->ifTrue(function ($node) {
+                                return [] !== ($node[self::SCOPES_NODE] ?? []) && '' !== ($node[self::CLAIM_NODE] ?? '');
+                            })
+                            ->thenInvalid('Please only specify either the \''.self::SCOPES_NODE.'\' or the \''.self::CLAIM_NODE.'\' for user attributes')
                         ->end()
                     ->end()
                 ->end()

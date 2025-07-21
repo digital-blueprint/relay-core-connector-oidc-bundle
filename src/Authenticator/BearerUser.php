@@ -6,22 +6,15 @@ namespace Dbp\Relay\CoreConnectorOidcBundle\Authenticator;
 
 use Symfony\Component\Security\Core\User\UserInterface;
 
-class BearerUser implements UserInterface
+/**
+ * @internal
+ */
+readonly class BearerUser implements UserInterface
 {
-    /**
-     * @var string[]
-     *
-     * @deprecated
-     */
-    private $rolesDeprecated;
-
-    /** @var string|null */
-    private $identifier;
-
-    public function __construct(?string $identifier, array $rolesDeprecated)
+    public function __construct(
+        private ?string $identifier,
+        private array $rolesDeprecated)
     {
-        $this->rolesDeprecated = $rolesDeprecated;
-        $this->identifier = $identifier;
     }
 
     public function getRoles(): array

@@ -7,13 +7,14 @@ namespace Dbp\Relay\CoreConnectorOidcBundle\TokenValidator;
 use Dbp\Relay\CoreConnectorOidcBundle\OIDCProvider\OIDError;
 use Dbp\Relay\CoreConnectorOidcBundle\OIDCProvider\OIDProvider;
 
+/**
+ * @internal
+ */
 class RemoteTokenValidator extends TokenValidatorBase
 {
-    private $oidProvider;
-
-    public function __construct(OIDProvider $oidProvider)
+    public function __construct(
+        private readonly OIDProvider $oidProvider)
     {
-        $this->oidProvider = $oidProvider;
     }
 
     /**

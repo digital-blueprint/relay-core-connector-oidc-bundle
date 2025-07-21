@@ -7,14 +7,13 @@ namespace Dbp\Relay\CoreConnectorOidcBundle\OIDCProvider;
 /**
  * discover: https://openid.net/specs/openid-connect-discovery-1_0.html
  * introspection: https://datatracker.ietf.org/doc/html/rfc8414.
+ *
+ * @internal
  */
-class OIDProviderConfig
+readonly class OIDProviderConfig
 {
-    private $config;
-
-    public function __construct(array $config)
+    public function __construct(private array $config)
     {
-        $this->config = $config;
     }
 
     /**

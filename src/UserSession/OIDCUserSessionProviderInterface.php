@@ -6,6 +6,9 @@ namespace Dbp\Relay\CoreConnectorOidcBundle\UserSession;
 
 use Dbp\Relay\CoreBundle\API\UserSessionProviderInterface;
 
+/**
+ * @internal
+ */
 interface OIDCUserSessionProviderInterface extends UserSessionProviderInterface
 {
     public function setSessionToken(?array $jwt): void;

@@ -4,39 +4,35 @@ declare(strict_types=1);
 
 namespace Dbp\Relay\CoreConnectorOidcBundle\Tests\UserSession;
 
+use Dbp\Relay\CoreConnectorOidcBundle\Helpers\Tools;
 use Dbp\Relay\CoreConnectorOidcBundle\UserSession\OIDCUserSessionProviderInterface;
 
 class DummyUserSessionProvider implements OIDCUserSessionProviderInterface
 {
-    /** @var string|null */
-    private $id;
-
-    /** @var array */
-    private $scopes;
-
-    public function __construct(?string $id = 'id', array $scopes = [])
+    public function __construct(
+        private readonly ?string $userIdentifier = 'id',
+        private ?array $jwt = [])
     {
-        $this->id = $id;
-        $this->scopes = $scopes;
     }
 
     public function setSessionToken(?array $jwt): void
     {
+        $this->jwt = $jwt;
     }
 
     public function getSessionToken(): ?array
     {
-        return [];
+        return $this->jwt;
     }
 
     public function getScopes(): array
     {
-        return $this->scopes;
+        return Tools::extractScopes($this->jwt);
     }
 
     public function getUserIdentifier(): ?string
     {
-        return $this->id;
+        return $this->userIdentifier;
     }
 
     public function getSessionLoggingId(): ?string

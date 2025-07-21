@@ -8,17 +8,19 @@ use Dbp\Relay\CoreBundle\HealthCheck\CheckInterface;
 use Dbp\Relay\CoreBundle\HealthCheck\CheckOptions;
 use Dbp\Relay\CoreBundle\HealthCheck\CheckResult;
 use Dbp\Relay\CoreConnectorOidcBundle\Authenticator\BearerUserProvider;
+use Dbp\Relay\CoreConnectorOidcBundle\OIDCProvider\OIDError;
 use Dbp\Relay\CoreConnectorOidcBundle\OIDCProvider\OIDProvider;
+use GuzzleHttp\Exception\GuzzleException;
 
-class HealthCheck implements CheckInterface
+/**
+ * @internal
+ */
+readonly class HealthCheck implements CheckInterface
 {
-    private $oidcProvider;
-    private $userProvider;
-
-    public function __construct(OIDProvider $oidcProvider, BearerUserProvider $userProvider)
+    public function __construct(
+        private OIDProvider $oidcProvider,
+        private BearerUserProvider $userProvider)
     {
-        $this->oidcProvider = $oidcProvider;
-        $this->userProvider = $userProvider;
     }
 
     public function getName(): string
@@ -41,17 +43,26 @@ class HealthCheck implements CheckInterface
         return $result;
     }
 
-    public function checkConfig()
+    /**
+     * @throws OIDError
+     */
+    public function checkConfig(): void
     {
         $this->oidcProvider->getProviderConfig();
     }
 
-    public function checkPublicKey()
+    /**
+     * @throws OIDError
+     */
+    public function checkPublicKey(): void
     {
         $this->oidcProvider->getJWKs();
     }
 
-    public function checkRemoteValidation()
+    /**
+     * @throws OIDError
+     */
+    public function checkRemoteValidation(): void
     {
         if (!$this->userProvider->usesRemoteValidation()) {
             // Not configured, so don't test
@@ -66,7 +77,10 @@ class HealthCheck implements CheckInterface
         }
     }
 
-    public function checkTimeSync()
+    /**
+     * @throws GuzzleException
+     */
+    public function checkTimeSync(): void
     {
         $providerTime = $this->oidcProvider->getProviderDateTime();
         $systemTime = new \DateTimeImmutable('now', new \DateTimeZone('UTC'));

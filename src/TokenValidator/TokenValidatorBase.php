@@ -7,6 +7,9 @@ namespace Dbp\Relay\CoreConnectorOidcBundle\TokenValidator;
 use Psr\Log\LoggerAwareInterface;
 use Psr\Log\LoggerAwareTrait;
 
+/**
+ * @internal
+ */
 abstract class TokenValidatorBase implements LoggerAwareInterface
 {
     use LoggerAwareTrait;
@@ -22,7 +25,7 @@ abstract class TokenValidatorBase implements LoggerAwareInterface
 
     /**
      * Verifies that the token was created for the given audience.
-     * If not then throws TokenValidationException.
+     * If not, it throws a TokenValidationException.
      *
      * @param array  $jwt      The access token
      * @param string $audience The audience string

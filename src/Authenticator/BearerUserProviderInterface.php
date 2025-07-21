@@ -6,6 +6,9 @@ namespace Dbp\Relay\CoreConnectorOidcBundle\Authenticator;
 
 use Symfony\Component\Security\Core\User\UserInterface;
 
+/**
+ * @internal
+ */
 interface BearerUserProviderInterface
 {
     public function loadUserByToken(string $accessToken): UserInterface;

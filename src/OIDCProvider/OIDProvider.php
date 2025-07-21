@@ -15,29 +15,31 @@ use Psr\Cache\CacheItemPoolInterface;
 use Psr\Log\LoggerAwareInterface;
 use Psr\Log\LoggerAwareTrait;
 
+/**
+ * @internal
+ */
 class OIDProvider implements LoggerAwareInterface
 {
     use LoggerAwareTrait;
 
-    private $config;
-    private $cachePool;
-    private $clientHandler;
-    private $serverConfig;
-
-    /* The duration the public keycloak config/cert is cached */
+    /* The duration, the public keycloak config/cert is cached */
     private const CACHE_TTL_SECONDS = 3600;
+
+    private array $config = [];
+    private ?CacheItemPoolInterface $cachePool = null;
+    private ?object $clientHandler = null;
+    private ?OIDProviderConfig $serverConfig = null;
 
     public function __construct()
     {
-        $this->config = [];
     }
 
-    public function setConfig(array $config)
+    public function setConfig(array $config): void
     {
         $this->config = $config;
     }
 
-    public function setCache(?CacheItemPoolInterface $cachePool)
+    public function setCache(?CacheItemPoolInterface $cachePool): void
     {
         $this->cachePool = $cachePool;
     }
@@ -45,7 +47,7 @@ class OIDProvider implements LoggerAwareInterface
     /**
      * Replace the guzzle client handler for testing.
      */
-    public function setClientHandler(?object $handler)
+    public function setClientHandler(?object $handler): void
     {
         $this->clientHandler = $handler;
     }
@@ -78,15 +80,18 @@ class OIDProvider implements LoggerAwareInterface
         return $client;
     }
 
+    /**
+     * @throws GuzzleException
+     * @throws \Exception
+     */
     public function getProviderDateTime(): \DateTimeInterface
     {
         $serverUrl = $this->config['server_url'] ?? '';
         $client = $this->getClient(true);
         $response = $client->request('GET', $serverUrl);
         $date = new \DateTimeImmutable($response->getHeader('Date')[0]);
-        $date = $date->setTimezone(new \DateTimeZone('UTC'));
 
-        return $date;
+        return $date->setTimezone(new \DateTimeZone('UTC'));
     }
 
     /**
@@ -139,6 +144,8 @@ class OIDProvider implements LoggerAwareInterface
     /**
      * This creates a token using the introspection client. Mainly for testing
      * introspection during health checks.
+     *
+     * @throws OIDError
      */
     public function createToken(): string
     {
