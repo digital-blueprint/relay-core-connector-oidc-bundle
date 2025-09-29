@@ -2,6 +2,10 @@
 
 ## Unreleased
 
+## v0.1.46
+
+- Add support for kevinrob/guzzle-cache-middleware v7
+
 ## v0.1.45
 
 - Modernize PHP code
