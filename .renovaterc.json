@@ -15,10 +15,6 @@
     {
       "matchPackagePrefixes": ["symfony/"],
       "allowedVersions": "<8"
-    },
-    {
-      "matchPackageNames": ["phpunit/phpunit"],
-      "allowedVersions": "<11"
     }
   ],
   "js": {
