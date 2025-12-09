@@ -2,6 +2,10 @@
 
 ## Unreleased
 
+## v0.1.47
+
+- Add support for Symfony 7.4
+
 ## v0.1.46
 
 - Add support for kevinrob/guzzle-cache-middleware v7
