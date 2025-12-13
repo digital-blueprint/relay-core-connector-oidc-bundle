@@ -1039,16 +1039,16 @@
         },
         {
             "name": "dbp/relay-core-bundle",
-            "version": "v0.1.226",
+            "version": "v0.1.227",
             "source": {
                 "type": "git",
                 "url": "https://github.com/digital-blueprint/relay-core-bundle.git",
-                "reference": "ea843491020b2c0077220bb92cd259eb3ee0248a"
+                "reference": "1e079830ead1e034f046abbf59348d4cb6ef0094"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/digital-blueprint/relay-core-bundle/zipball/ea843491020b2c0077220bb92cd259eb3ee0248a",
-                "reference": "ea843491020b2c0077220bb92cd259eb3ee0248a",
+                "url": "https://api.github.com/repos/digital-blueprint/relay-core-bundle/zipball/1e079830ead1e034f046abbf59348d4cb6ef0094",
+                "reference": "1e079830ead1e034f046abbf59348d4cb6ef0094",
                 "shasum": ""
             },
             "require": {
@@ -1145,9 +1145,9 @@
             "description": "The core bundle of the Relay API gateway",
             "support": {
                 "issues": "https://github.com/digital-blueprint/relay-core-bundle/issues",
-                "source": "https://github.com/digital-blueprint/relay-core-bundle/tree/v0.1.226"
+                "source": "https://github.com/digital-blueprint/relay-core-bundle/tree/v0.1.227"
             },
-            "time": "2025-12-09T08:39:40+00:00"
+            "time": "2025-12-09T10:49:41+00:00"
         },
         {
             "name": "doctrine/collections",
@@ -8415,16 +8415,16 @@
     "packages-dev": [
         {
             "name": "captainhook/captainhook",
-            "version": "5.27.3",
+            "version": "5.27.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/captainhook-git/captainhook.git",
-                "reference": "a4f836f6185b87066ce3388f6c944883eb248022"
+                "reference": "f4485d2a5db16a37053ffe7916f0808f619b430d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/captainhook-git/captainhook/zipball/a4f836f6185b87066ce3388f6c944883eb248022",
-                "reference": "a4f836f6185b87066ce3388f6c944883eb248022",
+                "url": "https://api.github.com/repos/captainhook-git/captainhook/zipball/f4485d2a5db16a37053ffe7916f0808f619b430d",
+                "reference": "f4485d2a5db16a37053ffe7916f0808f619b430d",
                 "shasum": ""
             },
             "require": {
@@ -8487,7 +8487,7 @@
             ],
             "support": {
                 "issues": "https://github.com/captainhook-git/captainhook/issues",
-                "source": "https://github.com/captainhook-git/captainhook/tree/5.27.3"
+                "source": "https://github.com/captainhook-git/captainhook/tree/5.27.4"
             },
             "funding": [
                 {
@@ -8495,7 +8495,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2025-11-27T13:11:01+00:00"
+            "time": "2025-12-12T10:35:01+00:00"
         },
         {
             "name": "captainhook/secrets",
