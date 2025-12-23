@@ -42,7 +42,6 @@ readonly class BearerUser implements UserInterface
         return $this->identifier ?? '';
     }
 
-    #[\Deprecated]
     public function eraseCredentials(): void
     {
     }
