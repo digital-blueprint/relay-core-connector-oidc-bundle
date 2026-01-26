@@ -96,9 +96,8 @@ class LocalTokenValidatorTest extends TestCase
             ]);
         } elseif ($alg === 'none') {
             return new JWK(['kty' => 'none']);
-        } else {
-            throw new \RuntimeException('Unsupported alg: '.$alg);
         }
+        throw new \RuntimeException('Unsupported alg: '.$alg);
     }
 
     private function getPublicJWKs()
