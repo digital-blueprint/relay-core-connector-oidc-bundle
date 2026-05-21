@@ -49,13 +49,6 @@ class LocalTokenValidatorTest extends TestCase
                 'dq' => 'CLDmDGduhylc9o7r84rEUVn7pzQ6PF83Y-iBZx5NT-TpnOZKF1pErAMVeKzFEl41DlHHqqBLSM0W1sOFbwTxYWZDm6sI6og5iTbwQGIC3gnJKbi_7k_vJgGHwHxgPaX2PnvP-zyEkDERuf-ry4c_Z11Cq9AqC2yeL6kdKT1cYF8',
                 'qi' => '3PiqvXQN0zwMeE-sBvZgi289XP9XCQF3VWqPzMKnIgQp7_Tugo6-NZBKCQsMf3HaEGBjTVJs_jcK8-TRXvaKe-7ZMaQj8VfBdYkssbu0NKDDhjJ-GtiseaDVWt7dcH0cfwxgFUHpQh7FoCrjFJ6h6ZEpMF6xmujs4qMpPz8aaI4',
             ]);
-        } elseif (\str_starts_with($alg, 'HS')) {
-            return new JWK([
-                'kty' => 'oct',
-                'kid' => 'bilbo.baggins.hmac@hobbiton.example',
-                'use' => 'sig',
-                'k' => 'uRlFc5ToCUJtMLBi5eMrMT-k1rEytzm7quHuadKnU5Vvj6_97BtJprASN3s7eMWNQrAd9MRxpk_Du54SYAVutw',
-            ]);
         } elseif ($alg === 'ES512') {
             return new JWK([
                 'kty' => 'EC',
@@ -104,7 +97,6 @@ class LocalTokenValidatorTest extends TestCase
     {
         return ['keys' => [
             $this->getJWK('RS256')->toPublic()->jsonSerialize(),
-            $this->getJWK('HS256')->toPublic()->jsonSerialize(),
             $this->getJWK('ES256')->toPublic()->jsonSerialize(),
             $this->getJWK('ES384')->toPublic()->jsonSerialize(),
             $this->getJWK('ES512')->toPublic()->jsonSerialize(),
@@ -123,7 +115,6 @@ class LocalTokenValidatorTest extends TestCase
                 'RS256', 'RS384', 'RS512',
                 'PS256', 'PS384', 'PS512',
                 'ES256', 'ES384', 'ES512',
-                'HS256', 'HS384', 'HS512',
                 'EdDSA',
             ],
         ];
@@ -161,9 +152,6 @@ class LocalTokenValidatorTest extends TestCase
             new Algorithm\ES256(),
             new Algorithm\ES384(),
             new Algorithm\ES512(),
-            new Algorithm\HS256(),
-            new Algorithm\HS384(),
-            new Algorithm\HS512(),
             new Algorithm\EdDSA(),
             new Algorithm\None(),
         ]);
@@ -273,7 +261,6 @@ class LocalTokenValidatorTest extends TestCase
             ['RS256'], ['RS384'], ['RS512'],
             ['PS256'], ['PS384'], ['PS512'],
             ['ES256'], ['ES384'], ['ES512'],
-            ['HS256'], ['HS384'], ['HS512'],
             ['EdDSA'],
         ];
     }

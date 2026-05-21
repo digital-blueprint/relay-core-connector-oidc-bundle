@@ -70,9 +70,6 @@ class LocalTokenValidator extends TokenValidatorBase
             new Algorithm\ES256(),
             new Algorithm\ES384(),
             new Algorithm\ES512(),
-            new Algorithm\HS256(),
-            new Algorithm\HS384(),
-            new Algorithm\HS512(),
             new Algorithm\EdDSA(),
         ]);
 
