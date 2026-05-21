@@ -2,6 +2,12 @@
 
 ## Unreleased
 
+## v0.1.48
+
+- Remove support for HS algorithms, their support was not complete since there
+  was no way to provide the secret key via configuration.
+- Fix token validation not considering missing iat/exp/iss claims as an error.
+
 ## v0.1.47
 
 - Add support for Symfony 7.4
