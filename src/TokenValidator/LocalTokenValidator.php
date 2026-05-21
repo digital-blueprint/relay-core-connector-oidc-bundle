@@ -107,7 +107,7 @@ class LocalTokenValidator extends TokenValidatorBase
                 new Checker\ExpirationTimeChecker(clock: $clock, allowedTimeDrift: $this->leewaySeconds),
                 new Checker\IssuerChecker([$issuer]),
             ]);
-            $claimCheckerManager->check($jwt);
+            $claimCheckerManager->check($jwt, ['iat', 'exp', 'iss']);
         } catch (\Exception $e) {
             throw new TokenValidationException('Token validation failed: '.$e->getMessage());
         }

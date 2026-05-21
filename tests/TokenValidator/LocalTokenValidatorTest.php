@@ -129,11 +129,11 @@ class LocalTokenValidatorTest extends TestCase
         ];
     }
 
-    private function getJWT(?int $time = null, ?string $issuer = null, string $alg = 'RS256'): string
+    private function getJWT(?int $time = null, ?string $issuer = null, string $alg = 'RS256', array $removeClaims = []): string
     {
         $time ??= time();
 
-        $payload = json_encode([
+        $claims = [
             'exp' => $time + 3600,
             'iat' => $time,
             'nbf' => $time,
@@ -141,7 +141,13 @@ class LocalTokenValidatorTest extends TestCase
             'iss' => $issuer ?? $this->oid->getProviderConfig()->getIssuer(),
             'aud' => ['audience1', 'audience2'],
             'sub' => 'subject',
-        ]);
+        ];
+
+        foreach ($removeClaims as $claim) {
+            unset($claims[$claim]);
+        }
+
+        $payload = json_encode($claims);
 
         $jwk = $this->getJWK($alg);
 
@@ -308,5 +314,35 @@ class LocalTokenValidatorTest extends TestCase
         $this->mockJWKResponse();
         $result = $this->tokenValidator->validate($this->getJWT());
         $this->assertEquals(null, $result['username']);
+    }
+
+    public function testMissingExpClaim()
+    {
+        $this->mockJWKResponse();
+
+        $jwt = $this->getJWT(removeClaims: ['exp']);
+        $this->expectException(TokenValidationException::class);
+        $this->expectExceptionMessageMatches('/exp/');
+        $this->tokenValidator->validate($jwt);
+    }
+
+    public function testMissingIatClaim()
+    {
+        $this->mockJWKResponse();
+
+        $jwt = $this->getJWT(removeClaims: ['iat']);
+        $this->expectException(TokenValidationException::class);
+        $this->expectExceptionMessageMatches('/iat/');
+        $this->tokenValidator->validate($jwt);
+    }
+
+    public function testMissingIssClaim()
+    {
+        $this->mockJWKResponse();
+
+        $jwt = $this->getJWT(removeClaims: ['iss']);
+        $this->expectException(TokenValidationException::class);
+        $this->expectExceptionMessageMatches('/iss/');
+        $this->tokenValidator->validate($jwt);
     }
 }
