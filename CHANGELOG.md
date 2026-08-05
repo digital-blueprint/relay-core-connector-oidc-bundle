@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+## v0.1.49
+
 - Add support for guzzlehttp/guzzle v8 and kevinrob/guzzle-cache-middleware v8
 
 ## v0.1.48
