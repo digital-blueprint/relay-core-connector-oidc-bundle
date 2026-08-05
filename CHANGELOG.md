@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+- Add support for guzzlehttp/guzzle v8 and kevinrob/guzzle-cache-middleware v8
+
 ## v0.1.48
 
 - Remove support for HS algorithms, their support was not complete since there
