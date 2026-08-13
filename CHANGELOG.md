@@ -2,6 +2,11 @@
 
 ## Unreleased
 
+## v0.1.50
+
+- Only handle "Bearer" authorization headers and ignore "Basic" authorization
+  headers, as the latter is not supported by this bundle.
+
 ## v0.1.49
 
 - Add support for guzzlehttp/guzzle v8 and kevinrob/guzzle-cache-middleware v8
