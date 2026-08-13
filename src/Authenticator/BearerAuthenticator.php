@@ -33,7 +33,9 @@ class BearerAuthenticator extends AbstractAuthenticator implements LoggerAwareIn
 
     public function supports(Request $request): ?bool
     {
-        return $request->headers->has('Authorization');
+        $auth = $request->headers->get('Authorization', '');
+
+        return preg_match('/^Bearer +/i', $auth) === 1;
     }
 
     public function onAuthenticationSuccess(Request $request, TokenInterface $token, string $firewallName): ?Response
@@ -53,7 +55,7 @@ class BearerAuthenticator extends AbstractAuthenticator implements LoggerAwareIn
             throw new BadCredentialsException('Token is not present in the request headers');
         }
 
-        $token = trim(preg_replace('/^(?:\s+)?Bearer\s/', '', $auth));
+        $token = preg_replace('/^Bearer +/i', '', $auth);
 
         $user = $this->userProvider->loadUserByToken($token);
 
